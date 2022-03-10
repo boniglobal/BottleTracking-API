@@ -1,8 +1,18 @@
+using Data.Concrete.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<BottleTrackingDbContext>(opt =>
+{
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection"))
+       .UseSnakeCaseNamingConvention();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
