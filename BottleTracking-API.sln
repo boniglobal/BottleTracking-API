@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottleTracking-API", "BottleTracking-API\BottleTracking-API.csproj", "{AA4ECCA8-4562-427F-8F4C-E94D354FA1CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BottleTracking-API", "BottleTracking-API\BottleTracking-API.csproj", "{AA4ECCA8-4562-427F-8F4C-E94D354FA1CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{7ADF9734-43B0-4FCA-980F-1C926474763E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{6B20411B-5945-4AF6-9EC1-32AA947ABD89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{AA4ECCA8-4562-427F-8F4C-E94D354FA1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA4ECCA8-4562-427F-8F4C-E94D354FA1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA4ECCA8-4562-427F-8F4C-E94D354FA1CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ADF9734-43B0-4FCA-980F-1C926474763E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ADF9734-43B0-4FCA-980F-1C926474763E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ADF9734-43B0-4FCA-980F-1C926474763E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ADF9734-43B0-4FCA-980F-1C926474763E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B20411B-5945-4AF6-9EC1-32AA947ABD89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B20411B-5945-4AF6-9EC1-32AA947ABD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B20411B-5945-4AF6-9EC1-32AA947ABD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B20411B-5945-4AF6-9EC1-32AA947ABD89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
