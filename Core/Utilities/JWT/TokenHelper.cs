@@ -36,7 +36,7 @@ namespace Core.Utilities.JWT
             var jwt = new JwtSecurityToken(
                 issuer: _tokenSettings.Issuer,
                 audience: _tokenSettings.Audience,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromSeconds(_tokenSettings.AccessTokenTTL)),
+                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_tokenSettings.AccessTokenTTL)),
                 claims: claims,
                 signingCredentials: credentials
                 );
