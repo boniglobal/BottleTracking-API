@@ -7,7 +7,7 @@ namespace Business.Services
     {
         PanelUser GetByEmail(string email);
     }
-    internal class PanelUserService : IPaneUserService
+    public class PanelUserService : IPaneUserService
     {
         private readonly IPanelUserRepository _userRepository;
 
