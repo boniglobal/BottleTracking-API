@@ -7,6 +7,7 @@
         public int BottleType { get; set; }
         public string TrackingId { get; set; }
         public string QrCode { get; set; }
+        public int QrPrintCount { get; set; }
         public int Status { get; set; }
         public DateTimeOffset LastRefillDate { get; set; }
         public DateTimeOffset LastUpdateDate { get; set; }
