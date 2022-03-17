@@ -79,7 +79,7 @@ namespace Business.Services
 
         private AuthResponse GetAuthResponse(PanelUser user, string sessionId)
         {
-            var username = user.Name + " " + user.Surname;
+            var fullName = user.Name + " " + user.Surname;
 
             var claims = new List<Claim>
             {
@@ -89,7 +89,7 @@ namespace Business.Services
 
             return new AuthResponse
             {
-                Name = username,
+                Name = fullName,
                 Email = user.Email,
                 AccessToken = accessToken.Token,
                 TokenExpiration = accessToken.Expiration
