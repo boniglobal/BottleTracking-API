@@ -5,8 +5,9 @@
         public enum Types
         {
             Admin = 1,
-            User,
-            Station
+            Panel,
+            Printer,
+            Kiosk
         }
     }
 }
