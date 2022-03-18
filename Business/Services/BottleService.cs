@@ -7,6 +7,7 @@ namespace Business.Services
     public interface IBottleService
     {
         BottleView GetById(int id);
+        BottleView GetByQrCode(string qrCode);
         PagedData<BottleView> GetAll(RequestFilter filter);
         BottleStatistics GetStatistics();
         void Add(BottleAdd bottleAdd);
@@ -25,6 +26,12 @@ namespace Business.Services
         {
             return _bottleRepository.GetById(id);
         }
+
+        public BottleView GetByQrCode(string qrCode)
+        {
+            return _bottleRepository.GetByQrCode(qrCode);
+        }
+
         public PagedData<BottleView> GetAll(RequestFilter filter)
         {
             return _bottleRepository.GetAll(filter);

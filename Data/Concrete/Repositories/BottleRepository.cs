@@ -131,5 +131,22 @@ namespace Data.Concrete.Repositories
                 return (int)UsageStatus.Expired;
             }
         }
+
+        public BottleView GetByQrCode(string qrCode)
+        {
+            return _dbContext.Bottles.Where(x=>x.QrCode == qrCode).Select(x=> new BottleView
+            {
+                Id = x.Id,
+                QrCode = x.QrCode,
+                BottleType = x.BottleType,
+                CreateDate = x.CreateDate,
+                LastRefillDate = x.LastRefillDate,
+                ProductionDate = x.ProductionDate,
+                QrPrintCount = x.QrPrintCount,
+                RefillCount = x.RefillCount,
+                Status = (UsageStatus)x.Status,
+                TrackingId = x.TrackingId
+            }).FirstOrDefault();
+        }
     }
 }

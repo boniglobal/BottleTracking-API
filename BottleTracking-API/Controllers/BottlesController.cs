@@ -28,6 +28,14 @@ namespace BottleTracking_API.Controllers
         }
 
         [HttpGet]
+        [Route("{qrCode}")]
+        public dynamic Get(string qrCode)
+        {
+            var data = _bottleService.GetByQrCode(qrCode);
+            return Messaging.GetResponse(true, null, null, data);
+        }
+
+        [HttpGet]
         public dynamic GetAll([FromQuery] RequestFilter filter)
         {
             var data = _bottleService.GetAll(filter);
