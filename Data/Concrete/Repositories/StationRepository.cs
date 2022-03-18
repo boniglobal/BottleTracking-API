@@ -52,7 +52,7 @@ namespace Data.Concrete.Repositories
                             CreateDate = station.CreateDate,
                             Location = station.Location,
                             ProductionLine = station.ProductionLine,
-                            UserName = user.Name + " " + user.Surname
+                            Fullname = user.Name + " " + user.Surname
                         };
 
             return query.OrderBy(filter.Order.Field, filter.Order.IsDesc)
