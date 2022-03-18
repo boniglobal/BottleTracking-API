@@ -36,6 +36,7 @@ namespace BottleTracking_API.Controllers
         }
 
         [Authorize(Roles = "Admin, Panel")]
+        [HttpGet]
         [Route("statistics")]
         public dynamic GetStatistics()
         {
