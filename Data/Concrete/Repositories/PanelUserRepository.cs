@@ -15,7 +15,12 @@ namespace Data.Concrete.Repositories
 
         public PanelUser GetByEmail(string email)
         {
-            return _dbContext.PanelUsers.Where(x=>x.Email == email).FirstOrDefault();    
+            return _dbContext.PanelUsers.Where(x => x.Email == email).FirstOrDefault();
+        }
+
+        public PanelUser GetById(int id)
+        {
+            return _dbContext.PanelUsers.Where(x => x.Id == id).FirstOrDefault();
         }
     }
 }

@@ -12,7 +12,9 @@ namespace Data.Concrete.Contexts.Mapping
 
             builder.Property(x => x.CreateDate).HasDefaultValueSql("now() at time zone 'utc'");
 
-            builder.HasMany(x=>x.StationLogs).WithOne(x => x.Bottle).HasForeignKey(x=>x.BottleId);
+            builder.HasMany(x => x.StationLogs).WithOne(x => x.Bottle).HasForeignKey(x => x.BottleId);
+
+            builder.HasQueryFilter(x => !x.Deleted);
 
         }
     }

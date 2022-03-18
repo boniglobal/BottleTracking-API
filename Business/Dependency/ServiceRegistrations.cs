@@ -1,8 +1,12 @@
 ﻿using Business.Services;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.JWT;
 using Data.Abstract;
 using Data.Concrete.Repositories;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using static Core.DTOs.Bottle;
+using static Core.DTOs.Station;
 
 namespace Business.Dependency
 {
@@ -16,10 +20,20 @@ namespace Business.Dependency
             //Services
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPaneUserService, PanelUserService>();
+            services.AddScoped<IBottleService, BottleService>();
+            services.AddScoped<IStationService, StationService>();
 
             //Repositories
             services.AddScoped<IPanelUserRepository, PanelUserRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IBottleRepository, BottleRepository>();
+            services.AddScoped<IStationRepository, StationRepository>();
+
+            //Validators
+            services.AddTransient<IValidator<StationAdd>, StationAddValidator>();
+            services.AddTransient<IValidator<StationUpdate>, StationUpdateValidator>();
+            services.AddTransient<IValidator<BottleAdd>, BottleAddValidator>();
+            services.AddTransient<IValidator<BottleUpdate>, BottleUpdateValidator>();
         }
     }
 }
