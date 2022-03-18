@@ -7,6 +7,7 @@ using static Core.Models.ResponseModels;
 
 namespace BottleTracking_API.Controllers
 {
+    [Authorize(Roles = "Admin, Panel, Printer")]
     [Route("[controller]")]
     [ApiController]
     public class BottlesController : ControllerBase
@@ -18,7 +19,6 @@ namespace BottleTracking_API.Controllers
             _bottleService = bottleService;
         }
 
-        [Authorize(Roles = "Admin, Panel")]
         [HttpGet]
         [Route("{id}")]
         public dynamic Get(int id)
@@ -27,7 +27,6 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
-        [Authorize(Roles = "Admin, Panel")]
         [HttpGet]
         public dynamic GetAll([FromQuery] RequestFilter filter)
         {
@@ -35,7 +34,6 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
-        [Authorize(Roles = "Admin, Panel")]
         [HttpGet]
         [Route("statistics")]
         public dynamic GetStatistics()
@@ -44,7 +42,6 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
-        [Authorize("Admin, Printer")]
         [HttpPost]
         public dynamic Add(BottleAdd bottleAdd)
         {
@@ -52,7 +49,6 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
-        [Authorize(Roles = "Admin, Panel")]
         [HttpPut]
         public dynamic Update(BottleUpdate data)
         {
@@ -60,7 +56,6 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
-        [Authorize(Roles = "Admin, Panel")]
         [HttpDelete]
         public dynamic Delete([FromBody]List<int> id)
         {
