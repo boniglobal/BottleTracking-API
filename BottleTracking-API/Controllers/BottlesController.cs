@@ -20,7 +20,7 @@ namespace BottleTracking_API.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public dynamic Get(int id)
         {
             var data = _bottleService.GetById(id);
