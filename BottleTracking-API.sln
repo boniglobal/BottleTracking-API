@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{6B20411B-5945-4AF6-9EC1-32AA947ABD89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{A4146FA2-64EC-40D3-B823-4EC01B2CABC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{6EC65AAB-1E4B-4A9D-983B-B4B48ACD7EC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{6B20411B-5945-4AF6-9EC1-32AA947ABD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B20411B-5945-4AF6-9EC1-32AA947ABD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B20411B-5945-4AF6-9EC1-32AA947ABD89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4146FA2-64EC-40D3-B823-4EC01B2CABC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4146FA2-64EC-40D3-B823-4EC01B2CABC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4146FA2-64EC-40D3-B823-4EC01B2CABC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4146FA2-64EC-40D3-B823-4EC01B2CABC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EC65AAB-1E4B-4A9D-983B-B4B48ACD7EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EC65AAB-1E4B-4A9D-983B-B4B48ACD7EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EC65AAB-1E4B-4A9D-983B-B4B48ACD7EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EC65AAB-1E4B-4A9D-983B-B4B48ACD7EC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
