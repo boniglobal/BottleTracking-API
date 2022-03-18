@@ -10,6 +10,7 @@ namespace Data.Concrete.Contexts.Mapping
         {
             builder.Property(x => x.Id).UseIdentityAlwaysColumn();
             builder.Property(x => x.CreateDate).HasDefaultValueSql("now() at time zone 'utc'");
+            builder.HasQueryFilter(x => !x.Deleted);
 
             builder.HasMany(x => x.StationLogs).WithOne(x => x.Station).HasForeignKey(x => x.StationId);
         }
