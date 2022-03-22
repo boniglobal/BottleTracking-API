@@ -2,6 +2,8 @@
 {
     public static class Messages
     {
+        public const string Unauthorized = "Unauthorized";
+
         // Station Management error messages
         public const string AssignDifferentUserType = "A kiosk user cannot be registered to more than one station.";
         public const string UserNotFound = "User not found.";
