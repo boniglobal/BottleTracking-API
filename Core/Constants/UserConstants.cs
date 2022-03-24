@@ -1,6 +1,6 @@
 ﻿namespace Core.Constants
 {
-    public class UserTypes
+    public class UserConstants
     {
         public enum Types
         {
@@ -9,5 +9,8 @@
             Printer,
             Kiosk
         }
+
+        public const int MaxNameLength = 30;
+        public const int MaxSurnameLength = 30;
     }
 }

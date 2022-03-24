@@ -40,7 +40,7 @@ namespace Business.ValidationRules.FluentValidation
 
         private bool CheckUserIfNotKiosk(int panelUserId)
         {
-            return user.Type == (int)UserTypes.Types.Kiosk;
+            return user.Type == (int)UserConstants.Types.Kiosk;
         }
     }
 }
