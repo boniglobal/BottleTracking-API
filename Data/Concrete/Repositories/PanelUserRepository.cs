@@ -1,6 +1,11 @@
-﻿using Data.Abstract;
+﻿using Core.Models;
+using Core.Extensions;
+using Data.Abstract;
 using Data.Concrete.Contexts;
 using Entities;
+using Microsoft.EntityFrameworkCore;
+using static Core.DTOs.User;
+using static Core.Constants.UserConstants;
 
 namespace Data.Concrete.Repositories
 {
@@ -13,6 +18,46 @@ namespace Data.Concrete.Repositories
             _dbContext = dbContext;
         }
 
+        public void Add(PanelUserAddRequest data)
+        {
+            var user = new PanelUser
+            {
+                Name = data.Name,
+                Surname = data.Surname,
+                Email = data.Email,
+                Type = (int)data.UserType
+            };
+
+            _dbContext.PanelUsers.Add(user);
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var user = _dbContext.PanelUsers.Where(x => x.Id == id).FirstOrDefault();
+            if(user != null)
+            {
+                user.Deleted = true;
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public PagedData<PanelUserGetResponse> GetAll(RequestFilter filter)
+        {
+            return _dbContext.PanelUsers.AsNoTracking()
+                                        .Select(x => new PanelUserGetResponse
+                                        {
+                                            Id = x.Id,
+                                            Name = x.Name,
+                                            Surname = x.Surname,
+                                            Email = x.Email,
+                                            UserType = (Types)x.Type,
+                                            CreatedDate = x.CreateDate
+                                        })
+                                        .OrderBy(filter.Order.Field, filter.Order.IsDesc)
+                                        .Paginate(filter.PageNumber, filter.PageSize);
+        }
+
         public PanelUser GetByEmail(string email)
         {
             return _dbContext.PanelUsers.Where(x => x.Email == email).FirstOrDefault();
@@ -21,6 +66,20 @@ namespace Data.Concrete.Repositories
         public PanelUser GetById(int id)
         {
             return _dbContext.PanelUsers.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public void Update(PanelUserUpdateRequest data)
+        {
+            var user = _dbContext.PanelUsers.Where(x => x.Id == data.Id).FirstOrDefault();
+
+            if (user != null)
+            {
+                user.Name = data.Name;
+                user.Surname = data.Surname;
+                user.Email = data.Email;
+                user.Type = (int)data.UserType;
+                _dbContext.SaveChanges();
+            }
         }
     }
 }
