@@ -55,7 +55,8 @@ namespace Data.Concrete.Repositories
                             Fullname = user.Name + " " + user.Surname
                         };
 
-            return query.OrderBy(filter.Order.Field, filter.Order.IsDesc)
+            return query.Filter(ref filter)
+                        .OrderBy(filter.Order.Field, filter.Order.IsDesc)
                         .Paginate(filter.PageNumber, filter.PageSize);
         }
 
