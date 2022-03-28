@@ -14,11 +14,9 @@ namespace Business.ValidationRules.FluentValidation
 
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Name).MaximumLength(UserConstants.MaxNameLength);
-            RuleFor(x => x.Name).Matches(@"^[a-zA-ZğüşöçıİĞÜŞÖÇ]+$");
 
             RuleFor(x => x.Surname).NotEmpty();
             RuleFor(x => x.Surname).MaximumLength(UserConstants.MaxNameLength);
-            RuleFor(x => x.Surname).Matches(@"^[a-zA-ZğüşöçıİĞÜŞÖÇ]+$");
 
             RuleFor(x => x.Email).NotEmpty();
             RuleFor(x => x.Email).Matches(@"^([\w\.\-]+)@((?!\.|\-)[\w\-]+)((\.(\w){2,3})+)$");

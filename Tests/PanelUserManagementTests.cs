@@ -54,14 +54,6 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData("u6ur")]
-        public void AddValidator_Should_Have_Validation_Error_For_Name_Format(string name)
-        {
-            _addDto.Name = name;
-            _addValidator.TestValidate(_addDto).ShouldHaveValidationErrorFor(x => x.Name);
-        }
-
-        [Theory]
         [InlineData("Uğur")]
         public void AddValidator_Should_Not_Have_Validation_Error_For_Name_Format_1(string name)
         {
@@ -180,14 +172,6 @@ namespace Tests
         public void UpdateValidator_Should_Have_Validation_Error_For_Name_Length()
         {
             string name = Guid.NewGuid().ToString();
-            _updateDto.Name = name;
-            _updateValidator.TestValidate(_updateDto).ShouldHaveValidationErrorFor(x => x.Name);
-        }
-
-        [Theory]
-        [InlineData("u6ur")]
-        public void UpdateValidator_Should_Have_Validation_Error_For_Name_Format(string name)
-        {
             _updateDto.Name = name;
             _updateValidator.TestValidate(_updateDto).ShouldHaveValidationErrorFor(x => x.Name);
         }
