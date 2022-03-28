@@ -1,13 +1,13 @@
-﻿using Business.Services;
+﻿using BottleTracking_API.Helpers;
+using Business.Services;
 using Core.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Core.DTOs.Station;
 using static Core.Models.ResponseModels;
 
 namespace BottleTracking_API.Controllers
 {
-    [Authorize(Roles = "Admin, Panel")]
+    [Authorize("Admin, Panel")]
     [Route("[controller]")]
     [ApiController]
     public class StationsController : ControllerBase
