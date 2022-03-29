@@ -54,7 +54,7 @@ namespace Core.Extensions
                         {
                             var values = filters.Field[key].Values.Select(x => ParseNumberValue(x)).OrderBy(x=>x).ToList();
                             Expression<Func<T, bool>> predicate = null;
-                            ConstantExpression constant = Expression.Constant((int)values.First(), typeof(int));
+                            ConstantExpression constant = Expression.Constant(Convert.ChangeType(values.First(), member.Type), member.Type);
                             BinaryExpression body = null;
 
                             switch (rule)
@@ -76,7 +76,7 @@ namespace Core.Extensions
                                     break;
                                 case NumberComparisons.Between:
                                     var last = values.Last();
-                                    var lastConst = Expression.Constant((int)values.Last(), member.Type);
+                                    var lastConst = Expression.Constant(Convert.ChangeType(values.Last(), member.Type), member.Type);
                                     var GT = Expression.GreaterThanOrEqual(member, constant);
                                     var LT = Expression.LessThanOrEqual(member, lastConst);
                                     body = Expression.And(GT, LT);
