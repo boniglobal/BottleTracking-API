@@ -16,18 +16,22 @@ namespace Tests
 
         private readonly PanelUserAddValidator _addValidator;
         private readonly PanelUserUpdateValidator _updateValidator;
+        private readonly PanelUserResetPasswordValidator _resetPasswordValidator;
         
         private PanelUserAddRequest _addDto;
         private PanelUserUpdateRequest _updateDto;
+        private ResetPassword _resetPassword;
         public PanelUserManagementTests()
         {
             _panelUserServiceMock = new Mock<IPaneUserService>();
 
             _addValidator = new PanelUserAddValidator(_panelUserServiceMock.Object);
             _updateValidator = new PanelUserUpdateValidator(_panelUserServiceMock.Object);
+            _resetPasswordValidator = new PanelUserResetPasswordValidator();
 
             _addDto = new PanelUserAddRequest();
             _updateDto = new PanelUserUpdateRequest();
+            _resetPassword = new ResetPassword();
         }
 
         [Fact]
@@ -138,6 +142,40 @@ namespace Tests
             _addValidator.TestValidate(_addDto).ShouldNotHaveValidationErrorFor(x => x.Email);
         }
 
+        [Theory]
+        [InlineData("123")]
+        public void AddValidator_Should_Have_Validation_Error_For_Password(string password)
+        {
+            _addDto.Password = password;
+            _addValidator.TestValidate(_addDto).ShouldHaveValidationErrorFor(x => x.Password);
+        }
+
+        [Theory]
+        [InlineData("1234")]
+        public void AddValidator_Should_Have_Validation_Error_For_Password_PasswordWithoutLetter(string password)
+        {
+            _addDto.Password = password;
+            _addValidator.TestValidate(_addDto).ShouldHaveValidationErrorFor(x => x.Password)
+                                               .WithErrorMessage(Messages.PasswordWithoutLetter);
+        }
+
+        [Theory]
+        [InlineData("ugur")]
+        public void AddValidator_Should_Have_Validation_Error_For_Password_PasswordWithoutNumber(string password)
+        {
+            _addDto.Password = password;
+            _addValidator.TestValidate(_addDto).ShouldHaveValidationErrorFor(x => x.Password)
+                                               .WithErrorMessage(Messages.PasswordWithoutNumber);
+        }
+
+        [Theory]
+        [InlineData("ugur123")]
+        public void AddValidator_Should_Not_Have_Validation_Error(string password)
+        {
+            _addDto.Password = password;
+            _addValidator.TestValidate(_addDto).ShouldNotHaveValidationErrorFor(x => x.Password);
+        }
+
         [Fact]
         public void AddValidator_Should_Have_Validation_Error_For_UserType()
         {
@@ -151,6 +189,19 @@ namespace Tests
         {
             _addDto.UserType = (Types)type;
             _addValidator.TestValidate(_addDto).ShouldNotHaveValidationErrorFor(x => x.UserType);
+        }
+
+        [Theory]
+        [InlineData("ugur","timurcin","u@boni.com", "ugur1", 4)]
+        public void AddValidator_Should_Not_Have_Any_Validation_Error(string name, string surname, string mail, string password, int type)
+        {
+            _addDto.Name = name;
+            _addDto.Surname = surname;
+            _addDto.Email = mail;
+            _addDto.UserType = (Types)type;
+            _addDto.Password = password;
+
+            _addValidator.TestValidate(_addDto).ShouldNotHaveAnyValidationErrors();
         }
 
         [Fact]
@@ -286,6 +337,40 @@ namespace Tests
             _updateDto.UserType = (Types)type;
             _updateValidator.TestValidate(_updateDto).ShouldNotHaveValidationErrorFor(x => x.UserType);
 
+        }
+
+        [Theory]
+        [InlineData("123")]
+        public void ResetPasswordValidator_Should_Have_Validation_Error_For_Password(string password)
+        {
+            _resetPassword.Password = password;
+            _resetPasswordValidator.TestValidate(_resetPassword).ShouldHaveValidationErrorFor(x => x.Password);
+        }
+
+        [Theory]
+        [InlineData("1234")]
+        public void ResetPasswordValidator_Should_Have_Validation_Error_For_Password_PasswordWithoutLetter(string password)
+        {
+            _resetPassword.Password = password;
+            _resetPasswordValidator.TestValidate(_resetPassword).ShouldHaveValidationErrorFor(x => x.Password)
+                                               .WithErrorMessage(Messages.PasswordWithoutLetter);
+        }
+
+        [Theory]
+        [InlineData("ugur")]
+        public void ResetPasswordValidator_Should_Have_Validation_Error_For_Password_PasswordWithoutNumber(string password)
+        {
+            _resetPassword.Password = password;
+            _resetPasswordValidator.TestValidate(_resetPassword).ShouldHaveValidationErrorFor(x => x.Password)
+                                               .WithErrorMessage(Messages.PasswordWithoutNumber);
+        }
+
+        [Theory]
+        [InlineData("ugur123")]
+        public void ResetPasswordValidator_Should_Not_Have_Validation_Error(string password)
+        {
+            _resetPassword.Password = password;
+            _resetPasswordValidator.TestValidate(_resetPassword).ShouldNotHaveValidationErrorFor(x => x.Password);
         }
     }
 }
