@@ -37,6 +37,7 @@ namespace Business.Dependency
             services.AddTransient<IValidator<BottleUpdate>, BottleUpdateValidator>();
             services.AddTransient<IValidator<PanelUserAddRequest>, PanelUserAddValidator>();
             services.AddTransient<IValidator<PanelUserUpdateRequest>, PanelUserUpdateValidator>();
+            services.AddTransient<IValidator<ResetPassword>, PanelUserResetPasswordValidator>();
         }
     }
 }
