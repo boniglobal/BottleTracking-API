@@ -12,5 +12,6 @@
 
         public const int MaxNameLength = 30;
         public const int MaxSurnameLength = 30;
+        public const int MinPasswordLength = 4;
     }
 }
