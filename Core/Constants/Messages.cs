@@ -9,5 +9,7 @@
 
         //PanelUser Management
         public const string NonUniqueEmail = "The email address must be unique.";
+        public const string PasswordWithoutLetter = "Your password must contain at least one letter.";
+        public const string PasswordWithoutNumber = "Your password must contain at least one number.";
     }
 }
