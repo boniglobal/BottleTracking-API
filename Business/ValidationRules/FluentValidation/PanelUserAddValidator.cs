@@ -22,6 +22,11 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(x => x.Email).Matches(@"^([\w\.\-]+)@((?!\.|\-)[\w\-]+)((\.(\w){2,3})+)$");
             RuleFor(x => x.Email).Must(CheckUserEmailAddress).WithMessage(Messages.NonUniqueEmail);
 
+            RuleFor(x=>x.Password).NotEmpty();
+            RuleFor(x => x.Password).MinimumLength(UserConstants.MinPasswordLength);
+            RuleFor(x => x.Password).Matches(@"[A-Za-z]+").WithMessage(Messages.PasswordWithoutLetter);
+            RuleFor(x => x.Password).Matches(@"[0-9]+").WithMessage(Messages.PasswordWithoutNumber);
+
             RuleFor(x => x.UserType).NotEmpty();
             RuleFor(x => x.UserType).IsInEnum();
         }
