@@ -40,6 +40,14 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
+        [HttpPut]
+        [Route("reset-password")]
+        public dynamic ResetPassword(ResetPassword data)
+        {
+            _panelUserService.ResetPassword(data);
+            return Messaging.GetResponse(true, null, null, null);
+        }
+
         [HttpDelete]
         [Route("{id}")]
         public dynamic Delete(int id)
