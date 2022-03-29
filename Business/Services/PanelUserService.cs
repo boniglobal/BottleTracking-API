@@ -11,6 +11,7 @@ namespace Business.Services
         PanelUser GetById(int Id);
         PagedData<PanelUserGetResponse> GetAll(RequestFilter filter);
         void Add(PanelUserAddRequest data);
+        void ResetPassword(ResetPassword data);
         void Update(PanelUserUpdateRequest data);
         void Delete(int id);
     }
@@ -46,6 +47,11 @@ namespace Business.Services
         public PanelUser GetById(int id)
         {
             return _userRepository.GetById(id);
+        }
+
+        public void ResetPassword(ResetPassword data)
+        {
+            _userRepository.ResetPassword(data);
         }
 
         public void Update(PanelUserUpdateRequest data)

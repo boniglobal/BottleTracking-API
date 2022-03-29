@@ -6,6 +6,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using static Core.DTOs.User;
 using static Core.Constants.UserConstants;
+using Core.Utilities;
 
 namespace Data.Concrete.Repositories
 {
@@ -20,12 +21,15 @@ namespace Data.Concrete.Repositories
 
         public void Add(PanelUserAddRequest data)
         {
+            HashingHelper.CreatePasswordHash(data.Password, out string hash, out string salt);
             var user = new PanelUser
             {
                 Name = data.Name,
                 Surname = data.Surname,
                 Email = data.Email,
-                Type = (int)data.UserType
+                Type = (int)data.UserType,
+                Password = hash,
+                PasswordSalt = salt
             };
 
             _dbContext.PanelUsers.Add(user);
@@ -66,6 +70,17 @@ namespace Data.Concrete.Repositories
         public PanelUser GetById(int id)
         {
             return _dbContext.PanelUsers.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public void ResetPassword(ResetPassword data)
+        {
+            var user = _dbContext.PanelUsers.Where(x => x.Id == data.UserId).FirstOrDefault();
+            if(user != null)
+            {
+                HashingHelper.CreatePasswordHash(data.Password, out string hash, out string salt);
+                user.Password = hash;
+                user.PasswordSalt = salt;
+            }
         }
 
         public void Update(PanelUserUpdateRequest data)
