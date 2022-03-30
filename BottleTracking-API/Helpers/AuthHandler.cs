@@ -79,9 +79,15 @@ namespace BottleTracking_API.Helpers
             var authRoles = _roles.Split(',').Select(x => x.Trim());
 
             var userInfo = (UserInfo)context.HttpContext.Items[AuthHandler.UserInfoKey];
-            var userRole = Enum.GetName(typeof(Types), userInfo.Type);
-            if (userInfo == null || !authRoles.Contains(userRole))
+            string userRole = string.Empty;
+            if (userInfo != null)
+            {
+                userRole = Enum.GetName(typeof(Types), userInfo.Type);
+            }
+            if (!authRoles.Contains(userRole))
+            {
                 throw new UnauthorizedAccessException(Messages.Unauthorized);
+            }
         }
     }
 
