@@ -28,7 +28,7 @@ namespace Data.Concrete.Repositories
             {
                 BottleId = bottle.Id,
                 StationId = station.Id,
-                Status = BottleStatusHelper(bottle)
+                Status = CheckBottleStatus(bottle)
             };
 
             _dbContext.StationLogs.Add(log);
@@ -77,7 +77,7 @@ namespace Data.Concrete.Repositories
             };
         }
 
-        private int BottleStatusHelper(Bottle bottle)
+        private int CheckBottleStatus(Bottle bottle)
         {
             var bottleProductionDate = bottle.ProductionDate;
             var stationLog = _dbContext.StationLogs.Where(x => x.Bottle.TrackingId == bottle.TrackingId &&
