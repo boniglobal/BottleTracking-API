@@ -36,7 +36,8 @@ namespace Data.Concrete.Repositories
 
         public PagedData<BottleView> GetAll(RequestFilter filter)
         {
-            return _dbContext.Bottles.OrderBy(filter.Order.Field, filter.Order.IsDesc)
+            return _dbContext.Bottles.Filter(ref filter)
+                                     .OrderBy(filter.Order.Field, filter.Order.IsDesc)
                                      .Select(x => new BottleView
                                      {
                                          Id = x.Id,
