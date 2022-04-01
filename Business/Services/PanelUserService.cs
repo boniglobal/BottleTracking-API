@@ -14,10 +14,13 @@ namespace Business.Services
     public class PanelUserService : IPaneUserService
     {
         private readonly IPanelUserRepository _userRepository;
-
-        public PanelUserService(IPanelUserRepository userRepository)
+        private readonly IStationService _stationService;
+        public PanelUserService(
+            IPanelUserRepository userRepository, 
+            IStationService stationService)
         {
             _userRepository = userRepository;
+            _stationService = stationService;
         }
 
         public PanelUser GetByEmail(string email)
@@ -37,11 +40,13 @@ namespace Business.Services
             {
                 if(HashingHelper.VerifyPasswordHash(password, user?.Password, user?.PasswordSalt))
                 {
+                    var station = _stationService.GetByPanelUserId(user.Id);
                     return new UserInfo
                     {
                         Id = user.Id,
                         Email = user.Email,
                         Type = user.Type,
+                        StationId = station.Id 
                     };
                 }
             }

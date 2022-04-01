@@ -22,12 +22,14 @@ namespace Business.Dependency
             services.AddScoped<IPaneUserService, PanelUserService>();
             services.AddScoped<IBottleService, BottleService>();
             services.AddScoped<IStationService, StationService>();
+            services.AddScoped<IStationLogService, StationLogService>();
 
             //Repositories
             services.AddScoped<IPanelUserRepository, PanelUserRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IBottleRepository, BottleRepository>();
             services.AddScoped<IStationRepository, StationRepository>();
+            services.AddScoped<IStationLogRepository, StationLogRepository>();
 
             //Validators
             services.AddTransient<IValidator<StationAdd>, StationAddValidator>();
