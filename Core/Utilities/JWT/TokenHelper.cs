@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using static Core.Constants.UserTypes;
+using static Core.Constants.UserConstants;
 
 namespace Core.Utilities.JWT
 {

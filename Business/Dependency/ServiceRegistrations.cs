@@ -7,6 +7,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using static Core.DTOs.Bottle;
 using static Core.DTOs.Station;
+using static Core.DTOs.User;
 
 namespace Business.Dependency
 {
@@ -36,6 +37,9 @@ namespace Business.Dependency
             services.AddTransient<IValidator<StationUpdate>, StationUpdateValidator>();
             services.AddTransient<IValidator<BottleAdd>, BottleAddValidator>();
             services.AddTransient<IValidator<BottleUpdate>, BottleUpdateValidator>();
+            services.AddTransient<IValidator<PanelUserAddRequest>, PanelUserAddValidator>();
+            services.AddTransient<IValidator<PanelUserUpdateRequest>, PanelUserUpdateValidator>();
+            services.AddTransient<IValidator<ResetPassword>, PanelUserResetPasswordValidator>();
         }
     }
 }
