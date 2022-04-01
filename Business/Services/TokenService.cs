@@ -33,8 +33,8 @@ namespace Business.Services
         public AuthResponse Authenticate(AuthRequest authRequest, out TokenInfo refreshToken)
         {
             var user = _paneUserService.GetByEmail(authRequest.Email);
-            var checkPassword = HashingHelper.VerifyPasswordHash(authRequest.Password, user.Password, user.PasswordSalt);
-            if(checkPassword == false)
+            var checkPassword = (user != null) && HashingHelper.VerifyPasswordHash(authRequest.Password, user.Password, user.PasswordSalt);
+            if (checkPassword == false)
             {
                 throw new UnauthorizedAccessException("Invalid user information.");
             }
