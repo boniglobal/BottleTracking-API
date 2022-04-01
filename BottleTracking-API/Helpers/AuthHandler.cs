@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net.Http.Headers;
 using System.Text;
-using static Core.Constants.UserTypes;
 using static Core.DTOs.User;
 
 namespace BottleTracking_API.Helpers
@@ -47,7 +46,7 @@ namespace BottleTracking_API.Helpers
                 {
                     var credentials = Encoding.UTF8.GetString(Convert.FromBase64String(header.Parameter)).Split(":");
                     var userInfo = adminService.GetUserInfo(credentials[0], credentials[1]);
-                    if (userInfo == null || userInfo.Type != (int)Types.Kiosk)
+                    if (userInfo == null || userInfo.Type != (int)UserConstants.Types.Kiosk)
                     {
                         throw new UnauthorizedAccessException(Messages.Unauthorized);
                     }
@@ -82,7 +81,7 @@ namespace BottleTracking_API.Helpers
             string userRole = string.Empty;
             if (userInfo != null)
             {
-                userRole = Enum.GetName(typeof(Types), userInfo.Type);
+                userRole = Enum.GetName(typeof(UserConstants.Types), userInfo.Type);
             }
             if (!authRoles.Contains(userRole))
             {
