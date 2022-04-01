@@ -29,7 +29,17 @@ builder.Services.AddDbContext<BottleTrackingDbContext>(opt =>
        .UseSnakeCaseNamingConvention();
 });
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "DefaultPolicy",
+                      builder =>
+                      {
+                          builder.SetIsOriginAllowed(origin => true)
+                                 .AllowAnyHeader()
+                                 .AllowAnyMethod()
+                                 .AllowCredentials();
+                      });
+});
 
 builder.Services.AddOptions<TokenSettings>().Bind(builder.Configuration.GetSection(nameof(TokenSettings)));
 builder.Services.AddCustomServices();
@@ -70,6 +80,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("DefaultPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
