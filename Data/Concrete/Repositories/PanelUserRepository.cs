@@ -39,7 +39,7 @@ namespace Data.Concrete.Repositories
         public void Delete(int id)
         {
             var user = _dbContext.PanelUsers.Where(x => x.Id == id).FirstOrDefault();
-            if(user != null)
+            if (user != null)
             {
                 user.Deleted = true;
                 _dbContext.SaveChanges();
@@ -75,7 +75,7 @@ namespace Data.Concrete.Repositories
         public void ResetPassword(ResetPassword data)
         {
             var user = _dbContext.PanelUsers.Where(x => x.Id == data.UserId).FirstOrDefault();
-            if(user != null)
+            if (user != null)
             {
                 HashingHelper.CreatePasswordHash(data.Password, out string hash, out string salt);
                 user.Password = hash;
@@ -83,18 +83,18 @@ namespace Data.Concrete.Repositories
             }
         }
 
-        public void Update(PanelUserUpdateRequest data)
+        public void Update(PanelUserUpdateRequest data, PanelUser user)
         {
-            var user = _dbContext.PanelUsers.Where(x => x.Id == data.Id).FirstOrDefault();
-
-            if (user != null)
+            if (user == null)
             {
-                user.Name = data.Name;
-                user.Surname = data.Surname;
-                user.Email = data.Email;
-                user.Type = (int)data.UserType;
-                _dbContext.SaveChanges();
+                user = _dbContext.PanelUsers.Where(x => x.Id == data.Id).FirstOrDefault();
             }
+
+            user.Name = data.Name;
+            user.Surname = data.Surname;
+            user.Email = data.Email;
+            user.Type = (int)data.UserType;
+            _dbContext.SaveChanges();
         }
     }
 }

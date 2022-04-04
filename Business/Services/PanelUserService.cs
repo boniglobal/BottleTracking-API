@@ -96,7 +96,7 @@ namespace Business.Services
             {
                 throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
             }
-            _userRepository.Update(data);
+            _userRepository.Update(data, existingUser);
         }
     }
 }
