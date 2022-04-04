@@ -1,8 +1,11 @@
 using Core.Utilities;
-﻿using Core.Models;
+using Core.Models;
 using Data.Abstract;
 using Entities;
 using static Core.DTOs.User;
+using Core.Constants;
+using System.Net;
+using Business.Utilities;
 
 namespace Business.Services
 {
@@ -32,6 +35,11 @@ namespace Business.Services
 
         public void Add(PanelUserAddRequest data)
         {
+            var existingUser = _userRepository.GetByEmail(data.Email);
+            if(existingUser != null)
+            {
+                throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
+            }
             _userRepository.Add(data);
         }
 
@@ -83,6 +91,11 @@ namespace Business.Services
 
         public void Update(PanelUserUpdateRequest data)
         {
+            var existingUser = _userRepository.GetByEmail(data.Email);
+            if(existingUser != null && existingUser.Id != data.Id)
+            {
+                throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
+            }
             _userRepository.Update(data);
         }
     }
