@@ -1,6 +1,9 @@
 ﻿using Business.Services;
+using Business.Utilities;
 using Business.ValidationRules.FluentValidation;
 using Core.Constants;
+using Data.Abstract;
+using FluentAssertions;
 using FluentValidation.TestHelper;
 using Moq;
 using System;
@@ -12,7 +15,8 @@ namespace Tests
 {
     public class PanelUserManagementTests
     {
-        private readonly Mock<IPaneUserService> _panelUserServiceMock;
+        private readonly IPaneUserService _panelUserService;
+        private readonly Mock<IPanelUserRepository> _panelUserRepositoryMock;
 
         private readonly PanelUserAddValidator _addValidator;
         private readonly PanelUserUpdateValidator _updateValidator;
@@ -23,10 +27,11 @@ namespace Tests
         private ResetPassword _resetPassword;
         public PanelUserManagementTests()
         {
-            _panelUserServiceMock = new Mock<IPaneUserService>();
+            _panelUserRepositoryMock = new Mock<IPanelUserRepository>();
+            _panelUserService = new PanelUserService(_panelUserRepositoryMock.Object, null);
 
-            _addValidator = new PanelUserAddValidator(_panelUserServiceMock.Object);
-            _updateValidator = new PanelUserUpdateValidator(_panelUserServiceMock.Object);
+            _addValidator = new PanelUserAddValidator();
+            _updateValidator = new PanelUserUpdateValidator();
             _resetPasswordValidator = new PanelUserResetPasswordValidator();
 
             _addDto = new PanelUserAddRequest();
@@ -118,28 +123,35 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData("ugurtimurcin@.com")]
-        public void AddValidator_Should_Have_Validation_Error_For_Email_Format(string email)
+        [InlineData("ugurtimurcin@boniglobal.com")]
+        public void AddValidator_Should_Throw_Exception_For_Email_NonUniqueEmail(string email)
         {
             _addDto.Email = email;
-            _addValidator.TestValidate(_addDto).ShouldHaveValidationErrorFor(x => x.Email);
+            _panelUserRepositoryMock.Setup(x => x.GetByEmail(email)).Returns(new Entities.PanelUser() { Email = email});
+
+            _panelUserService.Invoking(x=>x.Add(_addDto)).Should().Throw<CustomException>().WithMessage(Messages.NonUniqueEmail);
         }
 
         [Theory]
         [InlineData("ugurtimurcin@boniglobal.com")]
-        public void AddValidator_Should_Have_Validation_Error_For_Email_NonUniqueEmail(string email)
+        public void AddValidator_Should_Not_Throw_Exception_For_Email_NonUniqueEmail(string email)
         {
             _addDto.Email = email;
-            _panelUserServiceMock.Setup(x => x.GetByEmail(email)).Returns(new Entities.PanelUser());
-            _addValidator.TestValidate(_addDto).ShouldHaveValidationErrorFor(x => x.Email).WithErrorMessage(Messages.NonUniqueEmail);
+            _panelUserRepositoryMock.Setup(x => x.GetByEmail(email)).Returns((Entities.PanelUser)null);
+
+            _panelUserService.Invoking(x => x.Add(_addDto)).Should().NotThrow<CustomException>();
         }
 
         [Theory]
         [InlineData("ugurtimurcin@boniglobal.com")]
-        public void AddValidator_Should_Not_Have_Validation_Error_For_Email(string email)
+        public void AddValidator_Should_Not_Have_Validation_Error_Or_NotThrow_Exception_For_Email(string email)
         {
             _addDto.Email = email;
             _addValidator.TestValidate(_addDto).ShouldNotHaveValidationErrorFor(x => x.Email);
+
+            _panelUserRepositoryMock.Setup(x => x.GetByEmail(email)).Returns((Entities.PanelUser)null);
+
+            _panelUserService.Invoking(x => x.Add(_addDto)).Should().NotThrow<CustomException>();
         }
 
         [Theory]
@@ -288,21 +300,25 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData("ugurtimurcin@.com")]
-        public void UpdateValidator_Should_Have_Validation_Error_For_Email_Format(string email)
-        {
-            _updateDto.Email = email;
-            _updateValidator.TestValidate(_updateDto).ShouldHaveValidationErrorFor(x => x.Email);
-        }
-
-        [Theory]
         [InlineData("ugurtimurcin@boniglobal.com", 1, 2)]
-        public void UpdateValidator_Should_Have_Validation_Error_For_Email_NonUniqueEmail(string email, int userId, int existUserId)
+        public void UpdateValidator_Should_Throw_Exception_For_Email_NonUniqueEmail(string email, int userId, int existUserId)
         {
             _updateDto.Email = email;
             _updateDto.Id = userId;
-            _panelUserServiceMock.Setup(x => x.GetByEmail(email)).Returns(new Entities.PanelUser() { Id = existUserId});
-            _updateValidator.TestValidate(_updateDto).ShouldHaveValidationErrorFor(x => x.Email).WithErrorMessage(Messages.NonUniqueEmail);
+
+            _panelUserRepositoryMock.Setup(x=>x.GetByEmail(email)).Returns(new Entities.PanelUser { Id = existUserId });
+            _panelUserService.Invoking(x=>x.Update(_updateDto)).Should().Throw<CustomException>().WithMessage(Messages.NonUniqueEmail);
+        }
+
+        [Theory]
+        [InlineData("ugurtimurcin@boniglobal.com", 1, 1)]
+        public void UpdateValidator_Should_Not_Throw_Exception_For_Email_NonUniqueEmail(string email, int userId, int existUserId)
+        {
+            _updateDto.Email = email;
+            _updateDto.Id = userId;
+
+            _panelUserRepositoryMock.Setup(x => x.GetByEmail(email)).Returns(new Entities.PanelUser { Id = existUserId });
+            _panelUserService.Invoking(x => x.Update(_updateDto)).Should().NotThrow<CustomException>();
         }
 
         [Theory]
@@ -315,12 +331,16 @@ namespace Tests
 
         [Theory]
         [InlineData("ugurtimurcin@boniglobal.com", 1, 1)]
-        public void UpdateValidator_Should_Not_Have_Validation_Error_For_Email_1(string email, int userId, int existUserId)
+        public void UpdateValidator_Should_Not_Have_Validation_Error_Or_NotThrow_Exception_For_Email(
+            string email, int userId, int existUserId)
         {
             _updateDto.Id = userId;
             _updateDto.Email = email;
-            _panelUserServiceMock.Setup(x => x.GetByEmail(email)).Returns(new Entities.PanelUser { Id = existUserId });
+
             _updateValidator.TestValidate(_updateDto).ShouldNotHaveValidationErrorFor(x => x.Email);
+            _panelUserRepositoryMock.Setup(x => x.GetByEmail(email)).Returns(new Entities.PanelUser { Id = existUserId });
+            _panelUserService.Invoking(x=>x.Update(_updateDto)).Should().NotThrow<CustomException>();
+
         }
 
         [Fact]
