@@ -7,7 +7,6 @@ using static Core.Models.ResponseModels;
 
 namespace BottleTracking_API.Controllers
 {
-    [Authorize("Admin, Panel, Printer")]
     [Route("[controller]")]
     [ApiController]
     public class BottlesController : ControllerBase
@@ -19,6 +18,7 @@ namespace BottleTracking_API.Controllers
             _bottleService = bottleService;
         }
 
+        [Authorize("Admin, Panel, Printer")]
         [HttpGet]
         [Route("{id:int}")]
         public dynamic Get(int id)
@@ -27,6 +27,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
+        [Authorize("Admin, Panel, Printer")]
         [HttpGet]
         [Route("{qrCode}")]
         public dynamic Get(string qrCode)
@@ -35,6 +36,16 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
+        [Authorize("Admin, Panel, Kiosk")]
+        [HttpGet]
+        [Route("check-status")]
+        public dynamic GetStatus(string trackingId)
+        {
+            var data = _bottleService.GetBottleStatusByTrackingId(trackingId);
+            return Messaging.GetResponse(true, null, null, data);
+        }
+
+        [Authorize("Admin, Panel, Printer")]
         [HttpGet]
         public dynamic GetAll([FromQuery] RequestFilter filter)
         {
@@ -42,6 +53,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
+        [Authorize("Admin, Panel, Printer")]
         [HttpGet]
         [Route("statistics")]
         public dynamic GetStatistics()
@@ -50,6 +62,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
+        [Authorize("Admin, Panel, Printer")]
         [HttpPost]
         public dynamic Add(BottleAdd bottleAdd)
         {
@@ -57,6 +70,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
+        [Authorize("Admin, Panel, Printer")]
         [HttpPut]
         public dynamic Update(BottleUpdate data)
         {
@@ -64,6 +78,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
+        [Authorize("Admin, Panel, Printer")]
         [HttpDelete]
         public dynamic Delete([FromBody]List<int> id)
         {
