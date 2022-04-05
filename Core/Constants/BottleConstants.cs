@@ -16,5 +16,7 @@
 
         //Total days
         public const int BottleShelfLife = 1826;
+
+        public const string ProductionDateFormat = "MM/yyyy";
     }
 }
