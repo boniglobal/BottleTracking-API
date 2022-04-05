@@ -5,6 +5,7 @@ using static Core.Constants.BottleConstants;
 using static Core.DTOs.Bottle;
 using Core.Extensions;
 using Entities;
+using System.Globalization;
 
 namespace Data.Concrete.Repositories
 {
@@ -74,8 +75,11 @@ namespace Data.Concrete.Repositories
         {
             var bottle = _dbContext.Bottles.Where(x => x.Id == data.Id).FirstOrDefault();
 
+            DateTimeOffset productionDate = DateTimeOffset.ParseExact(data.ProductionDate,
+               ProductionDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+
             bottle.BottleType = data.BottleType;
-            bottle.ProductionDate = data.ProductionDate;
+            bottle.ProductionDate = productionDate;
 
             _dbContext.SaveChanges();
         }
@@ -96,15 +100,17 @@ namespace Data.Concrete.Repositories
         public void Add(BottleAdd bottleAdd)
         {
             var trackingId = Guid.NewGuid().ToString();
+            DateTimeOffset productionDate = DateTimeOffset.ParseExact(bottleAdd.ProductionDate,
+                ProductionDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
             var bottle = new Bottle
             {
                 BottleType = (int)BottleTypes.L12,
                 RefillCount = bottleAdd.RefillCount ?? 0,
                 TrackingId = trackingId,
-                QrCode = QrGenerator(trackingId, bottleAdd.ProductionDate),
-                ProductionDate = bottleAdd.ProductionDate,
-                Status = StatusCheck(bottleAdd.ProductionDate)
-                
+                QrCode = QrGenerator(trackingId, productionDate),
+                ProductionDate = productionDate,
+                Status = StatusCheck(productionDate)
+
             };
 
             _dbContext.Bottles.Add(bottle);
