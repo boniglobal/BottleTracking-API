@@ -26,7 +26,7 @@ namespace Business.Services
         private readonly IPanelUserRepository _userRepository;
         private readonly IStationService _stationService;
         public PanelUserService(
-            IPanelUserRepository userRepository, 
+            IPanelUserRepository userRepository,
             IStationService stationService)
         {
             _userRepository = userRepository;
@@ -35,11 +35,7 @@ namespace Business.Services
 
         public void Add(PanelUserAddRequest data)
         {
-            var existingUser = _userRepository.GetByEmail(data.Email);
-            if(existingUser != null)
-            {
-                throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
-            }
+            CheckIfEmailIsUnique(data.Email);
             _userRepository.Add(data);
         }
 
@@ -91,12 +87,24 @@ namespace Business.Services
 
         public void Update(PanelUserUpdateRequest data)
         {
-            var existingUser = _userRepository.GetByEmail(data.Email);
-            if(existingUser != null && existingUser.Id != data.Id)
+            var existingUser = CheckIfEmailIsUnique(data.Email, data.Id);
+            
+            _userRepository.Update(data, existingUser);
+        }
+
+        private PanelUser CheckIfEmailIsUnique(string email, int? userId = null)
+        {
+            var existingUser = _userRepository.GetByEmail(email);
+            if (userId == null && existingUser != null)
             {
                 throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
             }
-            _userRepository.Update(data, existingUser);
+            else if (userId != null && existingUser != null && existingUser.Id != userId)
+            {
+                throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
+            }
+
+            return existingUser;
         }
     }
 }
