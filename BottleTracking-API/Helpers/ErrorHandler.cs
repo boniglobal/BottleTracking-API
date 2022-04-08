@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Business.Utilities;
+using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
 using static Core.Models.ResponseModels;
@@ -33,20 +34,6 @@ namespace BottleTracking_API.Helpers
                 response.StatusCode = code;
                 var result = JsonSerializer.Serialize(Messaging.GetResponse(false, code, error.Message, null));
                 await response.WriteAsync(result);
-            }
-        }
-
-        public class CustomException : Exception
-        {
-            public HttpStatusCode StatusCode { get; set; }
-            public CustomException()
-            {
-            }
-
-            public CustomException(string message, HttpStatusCode code)
-                : base(message)
-            {
-                StatusCode = code;
             }
         }
     }

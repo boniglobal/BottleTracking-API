@@ -11,7 +11,7 @@ namespace Data.Abstract
         PagedData<PanelUserGetResponse> GetAll(RequestFilter filter);
         void Add(PanelUserAddRequest data);
         void ResetPassword(ResetPassword data);
-        void Update(PanelUserUpdateRequest data);
+        void Update(PanelUserUpdateRequest data, PanelUser user);
         void Delete(int id);
     }
 }

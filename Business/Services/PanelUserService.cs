@@ -1,8 +1,11 @@
 using Core.Utilities;
-﻿using Core.Models;
+using Core.Models;
 using Data.Abstract;
 using Entities;
 using static Core.DTOs.User;
+using Core.Constants;
+using System.Net;
+using Business.Utilities;
 
 namespace Business.Services
 {
@@ -23,7 +26,7 @@ namespace Business.Services
         private readonly IPanelUserRepository _userRepository;
         private readonly IStationService _stationService;
         public PanelUserService(
-            IPanelUserRepository userRepository, 
+            IPanelUserRepository userRepository,
             IStationService stationService)
         {
             _userRepository = userRepository;
@@ -32,6 +35,7 @@ namespace Business.Services
 
         public void Add(PanelUserAddRequest data)
         {
+            CheckIfEmailIsUnique(data.Email);
             _userRepository.Add(data);
         }
 
@@ -83,7 +87,24 @@ namespace Business.Services
 
         public void Update(PanelUserUpdateRequest data)
         {
-            _userRepository.Update(data);
+            var existingUser = CheckIfEmailIsUnique(data.Email, data.Id);
+            
+            _userRepository.Update(data, existingUser);
+        }
+
+        private PanelUser CheckIfEmailIsUnique(string email, int? userId = null)
+        {
+            var existingUser = _userRepository.GetByEmail(email);
+            if (userId == null && existingUser != null)
+            {
+                throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
+            }
+            else if (userId != null && existingUser != null && existingUser.Id != userId)
+            {
+                throw new CustomException(Messages.NonUniqueEmail, HttpStatusCode.BadRequest);
+            }
+
+            return existingUser;
         }
     }
 }
