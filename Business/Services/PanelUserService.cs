@@ -3,6 +3,7 @@ using Core.Utilities;
 using Data.Abstract;
 using Entities;
 using static Core.DTOs.User;
+using static Core.Constants.UserConstants;
 
 namespace Business.Services
 {
@@ -21,13 +22,10 @@ namespace Business.Services
     public class PanelUserService : IPaneUserService
     {
         private readonly IPanelUserRepository _userRepository;
-        private readonly IStationService _stationService;
         public PanelUserService(
-            IPanelUserRepository userRepository, 
-            IStationService stationService)
+            IPanelUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _stationService = stationService;
         }
 
         public void Add(PanelUserAddRequest data)
@@ -62,13 +60,12 @@ namespace Business.Services
             {
                 if (HashingHelper.VerifyPasswordHash(password, user?.Password, user?.PasswordSalt))
                 {
-                    var station = _stationService.GetByPanelUserId(user.Id);
                     return new UserInfo
                     {
                         Id = user.Id,
                         Email = user.Email,
                         Type = user.Type,
-                        StationId = station.Id
+                        StationId = user.Type == (int)Types.Kiosk ? _userRepository.GetUserStationIdByUserId(user.Id) : null 
                     };
                 }
             }
