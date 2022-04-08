@@ -4,6 +4,15 @@ namespace Core.DTOs
 {
     public class Bottle
     {
+        public class BottleStatusGetResponse
+        {
+            public string TrackingId { get; set; }
+            public BottleTypes Status { get; set; }
+            public DateTimeOffset ProductionDate { get; set; }
+            public int RefillCount { get; set; }
+            public DateTimeOffset LastRefillDate { get; set; }
+        }
+
         public class BottleView
         {
             public int Id { get; set; }

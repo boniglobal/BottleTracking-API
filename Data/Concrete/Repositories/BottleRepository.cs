@@ -110,7 +110,6 @@ namespace Data.Concrete.Repositories
                 QrCode = QrGenerator(trackingId, productionDate),
                 ProductionDate = productionDate,
                 Status = StatusCheck(productionDate)
-
             };
 
             _dbContext.Bottles.Add(bottle);
@@ -141,7 +140,7 @@ namespace Data.Concrete.Repositories
 
         public BottleView GetByQrCode(string qrCode)
         {
-            return _dbContext.Bottles.Where(x=>x.QrCode == qrCode).Select(x=> new BottleView
+            return _dbContext.Bottles.Where(x => x.QrCode == qrCode).Select(x => new BottleView
             {
                 Id = x.Id,
                 QrCode = x.QrCode,
@@ -154,6 +153,19 @@ namespace Data.Concrete.Repositories
                 Status = (UsageStatus)x.Status,
                 TrackingId = x.TrackingId
             }).FirstOrDefault();
+        }
+
+        public BottleStatusGetResponse GetBottleStatusByTrackingId(string trackingId)
+        {
+            return _dbContext.Bottles.Where(x => x.TrackingId == trackingId)
+                              .Select(x => new BottleStatusGetResponse
+                              {
+                                  TrackingId = x.TrackingId,
+                                  Status = (BottleTypes)x.Status,
+                                  LastRefillDate = x.LastRefillDate,
+                                  ProductionDate = x.ProductionDate,
+                                  RefillCount = x.RefillCount
+                              }).FirstOrDefault();
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Business.Services
     public interface IBottleService
     {
         BottleView GetById(int id);
+        BottleStatusGetResponse GetBottleStatusByTrackingId(string trackingId);
         BottleView GetByQrCode(string qrCode);
         PagedData<BottleView> GetAll(RequestFilter filter);
         BottleStatistics GetStatistics();
@@ -55,6 +56,11 @@ namespace Business.Services
         public void Delete(List<int> ids)
         {
             _bottleRepository.Delete(ids);
+        }
+
+        public BottleStatusGetResponse GetBottleStatusByTrackingId(string trackingId)
+        {
+            return _bottleRepository.GetBottleStatusByTrackingId(trackingId);
         }
     }
 }
