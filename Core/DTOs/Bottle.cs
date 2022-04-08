@@ -20,14 +20,14 @@ namespace Core.DTOs
 
         public class BottleAdd
         {
-            public DateTimeOffset ProductionDate { get; set; }
+            public string ProductionDate { get; set; }
             public int? RefillCount { get; set; }
             public int BottleType { get; set; }
         }
         public class BottleUpdate
         {
             public int Id { get; set; }
-            public DateTimeOffset ProductionDate { get; set; }
+            public string ProductionDate { get; set; }
             public int BottleType { get; set; }
         }
 

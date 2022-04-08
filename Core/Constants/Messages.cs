@@ -13,5 +13,8 @@
         public const string NonUniqueEmail = "The email address must be unique.";
         public const string PasswordWithoutLetter = "Your password must contain at least one letter.";
         public const string PasswordWithoutNumber = "Your password must contain at least one number.";
+
+        //Bottle Management
+        public const string InValidDateFormat = "Hatalı tarih formatı. Tarih 'AA/YYYY' formatında olmalı.";
     }
 }
