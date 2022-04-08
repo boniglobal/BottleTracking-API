@@ -8,6 +8,7 @@ namespace Data.Abstract
     {
         PanelUser GetByEmail(string email);
         PanelUser GetById(int id);
+        int GetUserStationIdByUserId(int userId);
         PagedData<PanelUserGetResponse> GetAll(RequestFilter filter);
         void Add(PanelUserAddRequest data);
         void ResetPassword(ResetPassword data);
