@@ -72,6 +72,11 @@ namespace Data.Concrete.Repositories
             return _dbContext.PanelUsers.Where(x => x.Id == id).FirstOrDefault();
         }
 
+        public int GetUserStationIdByUserId(int userId)
+        {
+            return _dbContext.Stations.Where(x => x.PanelUserId == userId).Select(x => x.Id).FirstOrDefault();
+        }
+
         public void ResetPassword(ResetPassword data)
         {
             var user = _dbContext.PanelUsers.Where(x => x.Id == data.UserId).FirstOrDefault();
