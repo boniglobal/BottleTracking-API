@@ -1,3 +1,4 @@
+using BottleTracking_API.Dependencies;
 using BottleTracking_API.Helpers;
 using Business.Dependency;
 using Core.Utilities.JWT;
@@ -43,6 +44,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddOptions<TokenSettings>().Bind(builder.Configuration.GetSection(nameof(TokenSettings)));
 builder.Services.AddCustomServices();
+builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -68,16 +70,18 @@ builder.Services.AddAuthentication(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerConfigurations();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+
 
 app.UseHttpsRedirection();
 
@@ -85,6 +89,9 @@ app.UseCors("DefaultPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<ErrorHandler>();
 app.UseMiddleware<AuthHandler>();
