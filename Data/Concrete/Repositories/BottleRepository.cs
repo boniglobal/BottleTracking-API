@@ -161,7 +161,7 @@ namespace Data.Concrete.Repositories
                               .Select(x => new BottleStatusGetResponse
                               {
                                   TrackingId = x.TrackingId,
-                                  Status = (BottleTypes)x.Status,
+                                  Status = (UsageStatus)x.Status,
                                   LastRefillDate = x.LastRefillDate,
                                   ProductionDate = x.ProductionDate,
                                   RefillCount = x.RefillCount
