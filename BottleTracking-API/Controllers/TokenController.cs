@@ -3,12 +3,17 @@ using Core.Utilities.JWT;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Net.Mime;
+using static Core.Constants.DocumentTexts;
 using static Core.DTOs.User;
 using static Core.Models.AuthModels;
 using static Core.Models.ResponseModels;
 
 namespace BottleTracking_API.Controllers
 {
+    [SwaggerTag(Token.ControllerDesc)]
+    [Produces(MediaTypeNames.Application.Json)]
     [Route("[controller]")]
     [ApiController]
     public class TokenController : ControllerBase
@@ -26,6 +31,8 @@ namespace BottleTracking_API.Controllers
         [AllowAnonymous]
         [Route("authenticate")]
         [HttpPost]
+        [SwaggerOperation(nameof(Authenticate), Token.AuthenticateDesc)]
+        [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
         public dynamic Authenticate(AuthRequest authRequest)
         {
             var data = _tokenService.Authenticate(authRequest, out TokenInfo refreshToken);
