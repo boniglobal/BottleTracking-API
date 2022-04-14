@@ -4,7 +4,7 @@
     {
         public class StationListView
         {
-            /// <summary>Veritabanı için benzersiz kimlik numarası</summary>
+            /// <summary>Benzersiz kimlik numarası</summary>
             /// <example>1</example>
             public int Id { get; set; }
             /// <summary>Oluşturulma tarihi</summary>

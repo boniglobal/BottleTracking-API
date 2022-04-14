@@ -6,7 +6,7 @@ namespace Core.DTOs
     {
         public class StationLogGetResponse
         {
-            /// <summary>Veritabanı için benzersiz kimlik numarası </summary>
+            /// <summary>Benzersiz kimlik numarası</summary>
             /// <example>1</example>
             public int Id { get; set; }
             /// <summary>Üretim tarihi</summary>

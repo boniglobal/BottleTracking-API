@@ -11,7 +11,7 @@
             public const string ControllerDesc = "Takibi yapılan, yapılacak damacanaların yönetimine olanak sağlar. " +
                 "Sisteme kayıtlı damacanaların ayrıntılarını alır; damacana ekler, günceller ve siler." +
                 "Bu işlemleri gerçekleştirebilmek için gerekli yetkilere sahip olunmalıdır.";
-            public const string GetDesc = "Belirtilen veritabanı için benzersiz kimlik numarasına sahip " +
+            public const string GetDesc = "Belirtilen benzersiz kimlik numarasına sahip " +
                 "damacana detaylarını alır.<br /> " +
                 "Bu işlemi yalnızca <b>Admin, Panel, Printer</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string GetbyQrDesc = "Belirtilen QR koduna sahip damacana detaylarını alır.<br /> " +
@@ -26,27 +26,27 @@
                 "bilgileri alır.<br /> Bu işlemi yalnızca <b>Admin, Panel, Printer</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string PostDesc = "Sisteme yeni bir damacana ekler.<br /> " +
                 "Bu işlemi yalnızca <b>Admin, Panel, Printer</b> türündeki kullanıcılar gerçekleştirebilir.";
-            public const string PutDesc = "Belirtilen veritabanı için oluşturulan benzersiz kimlik numarasına sahip " +
+            public const string PutDesc = "Belirtilen benzersiz kimlik numarasına sahip " +
                 "damacanayı günceller. <br /> Bu işlemi yalnızca <b>Admin, Panel, Printer</b> türündeki kullanıcılar gerçekleştirebilir.";
-            public const string DeleteDesc = "Belirtilen veritabanı için oluşturulan benzersiz kimlik numaralarına" +
+            public const string DeleteDesc = "Belirtilen benzersiz kimlik numaralarına " +
                 "sahip damacanaları sistemden siler." +
                 "<br /> Bu işlemi yalnızca <b>Admin, Panel, Printer</b> türündeki kullanıcılar gerçekleştirebilir.";
         }
 
         public static class PanelUser
         {
-            public const string ControllerDesc = "Kullanıcı yönetimine olanak sağlar. İlgili uç noktalar" +
+            public const string ControllerDesc = "Kullanıcı yönetimine olanak sağlar. İlgili uç noktalar " +
                 "kullanıcı detayını alır; yeni bir kullanıcı ekler, günceller ve siler. " +
                 "Bu işlemleri gerçekleştirebilmek için gerekli yetkilere sahip olunmalıdır.";
             public const string GetAllDesc = "Belirtilen filtrelere göre sisteme kayıtlı kullanıcıların " +
                 "detaylarını alır.<br /> Bu işlemi yalnızca <b>Admin</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string PostDesc = "Sisteme yeni bir kullanıcı ekler.<br /> Bu işlemi yalnızca " +
                 "<b>Admin</b> türündeki kullanıcılar gerçekleştirebilir.";
-            public const string PutDesc = "Belirtilen veritabanı için oluşturulan benzersiz kimlik numarasına sahip " +
+            public const string PutDesc = "Belirtilen benzersiz kimlik numarasına sahip " +
                 "kullanıcıyı günceller. <br /> Bu işlemi yalnızca <b>Admin</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string ResetPasswordDesc = "Şifresini unutan kullanıcının şifresini günceller. " +
                 "<br /> Bu işlemi yalnızca <b>Admin</b> türündeki kullanıcılar gerçekleştirebilir.";
-            public const string DeleteDesc = "Belirtilen veritabanı için oluşturulan benzersiz kimlik numarasına " +
+            public const string DeleteDesc = "Belirtilen benzersiz kimlik numarasına " +
                 "sahip kullanıcıyı sistemden siler." +
                 "<br /> Bu işlemi yalnızca <b>Admin</b> türündeki kullanıcılar gerçekleştirebilir.";
         }
@@ -77,16 +77,16 @@
                 "bilgileri alır.<br /> Bu işlemi yalnızca <b>Admin, Panel</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string PostDesc = "Sisteme yeni bir kiosk ekler.<br /> " +
                 "Bu işlemi yalnızca <b>Admin, Panel</b> türündeki kullanıcılar gerçekleştirebilir.";
-            public const string PutDesc = "Belirtilen veritabanı için oluşturulan benzersiz kimlik numarasına sahip " +
+            public const string PutDesc = "Belirtilen benzersiz kimlik numarasına sahip " +
                 "kiosku günceller. <br /> Bu işlemi yalnızca <b>Admin, Panel</b> türündeki kullanıcılar gerçekleştirebilir.";
-            public const string DeleteDesc = "Belirtilen veritabanı için oluşturulan benzersiz kimlik " +
+            public const string DeleteDesc = "Belirtilen benzersiz kimlik " +
                 "numarasına sahip kiosku sistemden siler." +
                 "<br /> Bu işlemi yalnızca <b>Admin, Panel</b> türündeki kullanıcılar gerçekleştirebilir.";
         }
 
         public static class Token
         {
-            public const string ControllerDesc = "Sistemdeki giriş ve kullanıcı bilgilerinin doğrulanması için JWT" +
+            public const string ControllerDesc = "Sistemdeki giriş ve kullanıcı bilgilerinin doğrulanması için JWT " +
                 "altyapısı kullanılmaktadır. Herhangi bir işlem yapmak isteyen kullanıcıların bilgileri kontrol edilir, " +
                 "bu doğrultuda ilgili işlemi gerçekleştirebilmesine olanak sağlanır.";
             public const string AuthenticateDesc = "Kullanıcının işlem gerçekleştirebilmesi için bilgilerinin doğrulanması " +
