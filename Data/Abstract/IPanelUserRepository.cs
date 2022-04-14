@@ -10,6 +10,7 @@ namespace Data.Abstract
         PanelUser GetById(int id);
         int GetUserStationIdByUserId(int userId);
         PagedData<PanelUserGetResponse> GetAll(RequestFilter filter);
+        List<KioskUserGetResponse> GetUnassignedKioskUsers();
         void Add(PanelUserAddRequest data);
         void ResetPassword(ResetPassword data);
         void Update(PanelUserUpdateRequest data, PanelUser user);

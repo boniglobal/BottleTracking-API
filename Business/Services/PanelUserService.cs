@@ -16,6 +16,7 @@ namespace Business.Services
         PanelUser GetById(int Id);
         UserInfo GetUserInfo(string email, string password);
         PagedData<PanelUserGetResponse> GetAll(RequestFilter filter);
+        List<KioskUserGetResponse> GetUnassignedKioskUsers();
         void Add(PanelUserAddRequest data);
         void ResetPassword(ResetPassword data);
         void Update(PanelUserUpdateRequest data);
@@ -54,6 +55,11 @@ namespace Business.Services
         public PanelUser GetById(int id)
         {
             return _userRepository.GetById(id);
+        }
+
+        public List<KioskUserGetResponse> GetUnassignedKioskUsers()
+        {
+            return _userRepository.GetUnassignedKioskUsers();
         }
 
         public UserInfo GetUserInfo(string email, string password)
