@@ -40,6 +40,9 @@
                 "Bu işlemleri gerçekleştirebilmek için gerekli yetkilere sahip olunmalıdır.";
             public const string GetAllDesc = "Belirtilen filtrelere göre sisteme kayıtlı kullanıcıların " +
                 "detaylarını alır.<br /> Bu işlemi yalnızca <b>Admin</b> türündeki kullanıcılar gerçekleştirebilir.";
+            public const string GetUnassignedKioskUsers = "Her istasyona (kiosk) kullanıcı ataması zorunlu olup, atanacak kullanıcı" +
+                "türü Kiosk olmalı. Bir Kiosk kullanıcısı birden fazla istasyona atanamaz. Bu ileri uç, sisteme kayıtlı atanmamış " +
+                "Kiosk türündeki kullanıcıları listeler.<br /> Bu işlemi yalnızca <b>Admin, Panel</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string PostDesc = "Sisteme yeni bir kullanıcı ekler.<br /> Bu işlemi yalnızca " +
                 "<b>Admin</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string PutDesc = "Belirtilen veritabanı için oluşturulan benzersiz kimlik numarasına sahip " +
