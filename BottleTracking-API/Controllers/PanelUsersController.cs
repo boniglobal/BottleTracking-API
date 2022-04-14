@@ -12,7 +12,6 @@ namespace BottleTracking_API.Controllers
 {
     [SwaggerTag(PanelUser.ControllerDesc)]
     [Produces(MediaTypeNames.Application.Json)]
-    [Authorize("Admin")]
     [Route("[controller]")]
     [ApiController]
     public class PanelUsersController : ControllerBase
@@ -24,6 +23,7 @@ namespace BottleTracking_API.Controllers
             _panelUserService = panelUserService;
         }
 
+        [Authorize("Admin")]
         [HttpGet]
         [SwaggerOperation(nameof(GetAll), PanelUser.GetAllDesc)]
         [ProducesResponseType(typeof(PagedData<PanelUserGetResponse>), StatusCodes.Status200OK)]
@@ -33,6 +33,18 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
+        [Authorize("Admin, Panel")]
+        [HttpGet]
+        [Route("unassigned-kiosk-users")]
+        [SwaggerOperation(nameof(GetUnassignedKioskUsers), PanelUser.GetUnassignedKioskUsers)]
+        [ProducesResponseType(typeof(List<KioskUserGetResponse>), StatusCodes.Status200OK)]
+        public dynamic GetUnassignedKioskUsers()
+        {
+            var data = _panelUserService.GetUnassignedKioskUsers();
+            return Messaging.GetResponse(true, null, null, data);
+        }
+
+        [Authorize("Admin")]
         [HttpPost]
         [SwaggerOperation(nameof(Add), PanelUser.PostDesc)]
         public dynamic Add(PanelUserAddRequest data)
@@ -41,6 +53,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
+        [Authorize("Admin")]
         [HttpPut]
         [SwaggerOperation(nameof(Update), PanelUser.PostDesc)]
         public dynamic Update(PanelUserUpdateRequest data)
@@ -49,6 +62,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
+        [Authorize("Admin")]
         [HttpPut]
         [Route("reset-password")]
         [SwaggerOperation(nameof(ResetPassword), PanelUser.ResetPasswordDesc)]
@@ -59,6 +73,7 @@ namespace BottleTracking_API.Controllers
         }
 
         ///<param name="id" example="1"></param>
+        [Authorize("Admin")]
         [HttpDelete]
         [Route("{id}")]
         [SwaggerOperation(nameof(Delegate), PanelUser.DeleteDesc)]
