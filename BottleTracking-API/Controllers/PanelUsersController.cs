@@ -42,7 +42,7 @@ namespace BottleTracking_API.Controllers
         }
 
         [HttpPut]
-        [SwaggerOperation(nameof(Update), PanelUser.PostDesc)]
+        [SwaggerOperation(nameof(Update), PanelUser.PutDesc)]
         public dynamic Update(PanelUserUpdateRequest data)
         {
             _panelUserService.Update(data);
@@ -61,7 +61,7 @@ namespace BottleTracking_API.Controllers
         ///<param name="id" example="1"></param>
         [HttpDelete]
         [Route("{id}")]
-        [SwaggerOperation(nameof(Delegate), PanelUser.DeleteDesc)]
+        [SwaggerOperation(nameof(Delete), PanelUser.DeleteDesc)]
         public dynamic Delete(int id)
         {
             _panelUserService.Delete(id);
