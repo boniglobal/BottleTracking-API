@@ -2,11 +2,16 @@
 using Business.Services;
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Net.Mime;
+using static Core.Constants.DocumentTexts;
 using static Core.DTOs.Bottle;
 using static Core.Models.ResponseModels;
 
 namespace BottleTracking_API.Controllers
 {
+    [SwaggerTag(Bottle.ControllerDesc)]
+    [Produces(MediaTypeNames.Application.Json)]
     [Route("[controller]")]
     [ApiController]
     public class BottlesController : ControllerBase
@@ -18,27 +23,36 @@ namespace BottleTracking_API.Controllers
             _bottleService = bottleService;
         }
 
+        /// <param name="id" example="1"></param>
         [Authorize("Admin, Panel, Printer")]
         [HttpGet]
         [Route("{id:int}")]
+        [SwaggerOperation(nameof(Get), Bottle.GetDesc)]
+        [ProducesResponseType(typeof(BottleView), StatusCodes.Status200OK)]
         public dynamic Get(int id)
         {
             var data = _bottleService.GetById(id);
             return Messaging.GetResponse(true, null, null, data);
         }
 
+        /// <param name="qrCode" example="725eb7d6-d06e-419d-9e3c-e6f194733e4420224"></param>
         [Authorize("Admin, Panel, Printer")]
         [HttpGet]
         [Route("{qrCode}")]
+        [SwaggerOperation(nameof(Get), Bottle.GetbyQrDesc)]
+        [ProducesResponseType(typeof(BottleView), StatusCodes.Status200OK)]
         public dynamic Get(string qrCode)
         {
             var data = _bottleService.GetByQrCode(qrCode);
             return Messaging.GetResponse(true, null, null, data);
         }
 
+        ///<param name="trackingId" example="725eb7d6-d06e-419d-9e3c-e6f194733e44"></param>
         [Authorize("Admin, Panel, Kiosk")]
         [HttpGet]
         [Route("check-status")]
+        [SwaggerOperation(nameof(GetStatus), Bottle.CheckStatusDesc)]
+        [ProducesResponseType(typeof(BottleStatusGetResponse), StatusCodes.Status200OK)]
         public dynamic GetStatus(string trackingId)
         {
             var data = _bottleService.GetBottleStatusByTrackingId(trackingId);
@@ -47,6 +61,8 @@ namespace BottleTracking_API.Controllers
 
         [Authorize("Admin, Panel, Printer")]
         [HttpGet]
+        [SwaggerOperation(nameof(GetAll), Bottle.GetAllDesc)]
+        [ProducesResponseType(typeof(PagedData<BottleView>), StatusCodes.Status200OK)]
         public dynamic GetAll([FromQuery] RequestFilter filter)
         {
             var data = _bottleService.GetAll(filter);
@@ -56,6 +72,8 @@ namespace BottleTracking_API.Controllers
         [Authorize("Admin, Panel, Printer")]
         [HttpGet]
         [Route("statistics")]
+        [SwaggerOperation(nameof(GetStatistics), Bottle.GetStatisticsDesc)]
+        [ProducesResponseType(typeof(BottleStatistics), StatusCodes.Status200OK)]
         public dynamic GetStatistics()
         {
             var data = _bottleService.GetStatistics();
@@ -64,6 +82,7 @@ namespace BottleTracking_API.Controllers
 
         [Authorize("Admin, Panel, Printer")]
         [HttpPost]
+        [SwaggerOperation(nameof(Add), Bottle.PostDesc)]
         public dynamic Add(BottleAdd bottleAdd)
         {
             _bottleService.Add(bottleAdd);
@@ -72,15 +91,18 @@ namespace BottleTracking_API.Controllers
 
         [Authorize("Admin, Panel, Printer")]
         [HttpPut]
+        [SwaggerOperation(nameof(Update), Bottle.PutDesc)]
         public dynamic Update(BottleUpdate data)
         {
             _bottleService.Update(data);
             return Messaging.GetResponse(true, null, null, null);
         }
 
+        /// <param name="id" example="[1,2,3]"></param>
         [Authorize("Admin, Panel, Printer")]
         [HttpDelete]
-        public dynamic Delete([FromBody]List<int> id)
+        [SwaggerOperation(nameof(Delete), Bottle.DeleteDesc)]
+        public dynamic Delete([FromBody] List<int> id)
         {
             _bottleService.Delete(id);
             return Messaging.GetResponse(true, null, null, null);

@@ -4,6 +4,7 @@ using Core.Utilities.JWT;
 using Data.Abstract;
 using Data.Concrete.Repositories;
 using FluentValidation;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using static Core.DTOs.Bottle;
 using static Core.DTOs.Station;
@@ -40,6 +41,9 @@ namespace Business.Dependency
             services.AddTransient<IValidator<PanelUserAddRequest>, PanelUserAddValidator>();
             services.AddTransient<IValidator<PanelUserUpdateRequest>, PanelUserUpdateValidator>();
             services.AddTransient<IValidator<ResetPassword>, PanelUserResetPasswordValidator>();
+
+            ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr");
+            services.AddFluentValidationRulesToSwagger();
         }
     }
 }

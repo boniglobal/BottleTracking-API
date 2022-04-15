@@ -4,7 +4,11 @@ namespace Core.Models
 {
     public class RequestFilter
     {
+        /// <summary>Sayfa numarası</summary>
+        /// <example>1</example>
         public int PageNumber { get; set; }
+        /// <summary>Sayfada görüntülenecek veri sayısı</summary>
+        /// <example>20</example>
         public int PageSize { get; set; }
         public Order Order { get; set; }
         public Dictionary<string, FieldFilter> Field { get; set; }
@@ -32,7 +36,11 @@ namespace Core.Models
     }
     public class Order
     {
+        /// <summary>Verilerin kendisine göre sıralanacağı alan</summary>
+        /// <example>Id</example>
         public string Field { get; set; }
+        /// <summary>Sıralama yönü. Artan için false, azalan için true olarak belirtilmelidir</summary>
+        /// <example>true</example>
         public bool IsDesc { get; set; }
     }
 

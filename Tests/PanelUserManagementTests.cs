@@ -28,7 +28,7 @@ namespace Tests
         public PanelUserManagementTests()
         {
             _panelUserRepositoryMock = new Mock<IPanelUserRepository>();
-            _panelUserService = new PanelUserService(_panelUserRepositoryMock.Object, null);
+            _panelUserService = new PanelUserService(_panelUserRepositoryMock.Object);
 
             _addValidator = new PanelUserAddValidator();
             _updateValidator = new PanelUserUpdateValidator();
