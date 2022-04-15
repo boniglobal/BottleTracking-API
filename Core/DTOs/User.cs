@@ -35,6 +35,19 @@ namespace Core.DTOs
             public DateTimeOffset CreatedDate { get; set; }
         }
 
+        public class KioskUserGetResponse
+        {
+            /// <summary>Kullanıcının benzersiz kimlik numarası</summary>
+            /// <example>1</example>
+            public int Id { get; set; }
+            /// <summary>Kullanıcının adı</summary>
+            /// <example>Deniz</example>
+            public string Name { get; set; }
+            /// <summary>Kullanıcının soyadı</summary>
+            /// <example>Kalkan</example>
+            public string Surname { get; set; }
+        }
+
         public class PanelUserAddRequest
         {
             /// <summary>Sisteme kaydedilecek kullanıcının adı</summary>

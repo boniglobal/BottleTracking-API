@@ -72,6 +72,18 @@ namespace Data.Concrete.Repositories
             return _dbContext.PanelUsers.Where(x => x.Id == id).FirstOrDefault();
         }
 
+        public List<KioskUserGetResponse> GetUnassignedKioskUsers()
+        {
+            return _dbContext.PanelUsers.Where(x => x.Type == (int)Types.Kiosk &&
+                                                    !_dbContext.Stations.Any(s => s.PanelUserId == x.Id))
+                                        .Select(x => new KioskUserGetResponse
+                                        {
+                                            Id = x.Id,
+                                            Name = x.Name,
+                                            Surname = x.Surname,
+                                        }).ToList();
+        }
+
         public int GetUserStationIdByUserId(int userId)
         {
             return _dbContext.Stations.Where(x => x.PanelUserId == userId).Select(x => x.Id).FirstOrDefault();
