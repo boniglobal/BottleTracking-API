@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -38,11 +39,16 @@ namespace Core.Extensions
                             {
                                 foreach (var value in values)
                                 {
-                                    //TO DO: make method case-intensive
-                                    MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string)});
-                                    ConstantExpression constant = Expression.Constant(value, typeof(string));
-                                    var containsMethod = Expression.Call(member, method, constant);
-                                    var condition = Expression.Lambda<Func<T, bool>>(containsMethod, parameter);
+                                    ConstantExpression constant = Expression.Constant($"%{value}%", typeof(string));
+
+                                    var _ILike = typeof(NpgsqlDbFunctionsExtensions).GetMethod("ILike", BindingFlags.Static | 
+                                        BindingFlags.Public | BindingFlags.NonPublic, null, new[] { typeof(DbFunctions), typeof(string),
+                                    typeof(string) }, null );
+
+                                    var bodyLike = Expression.Call(_ILike, 
+                                        Expression.Constant(null, typeof(DbFunctions)), member, constant);
+
+                                    var condition = Expression.Lambda<Func<T, bool>>(bodyLike, parameter);
                                     predicate = predicate.And(condition);
                                 }
                                 query = query.Where(predicate);
