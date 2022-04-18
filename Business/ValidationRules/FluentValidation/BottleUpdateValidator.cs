@@ -10,6 +10,8 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(x => x.ProductionDate).NotEmpty();
             RuleFor(x => x.ProductionDate).Must(CheckDateIfNotValid).WithMessage(Messages.InValidDateFormat);
+            RuleFor(x => x.BottleType).NotEmpty();
+            RuleFor(x => x.BottleType).IsInEnum();
         }
 
         private bool CheckDateIfNotValid(string value)
