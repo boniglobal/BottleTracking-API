@@ -40,7 +40,7 @@ namespace Core.DTOs
             public DateTimeOffset LastRefillDate { get; set; }
             /// <summary>Damacana türü</summary>
             /// <example>1</example>
-            public int BottleType { get; set; }
+            public BottleTypes BottleType { get; set; }
             /// <summary>Damacana için oluşturulan benzersiz QR kodu </summary>
             /// <example>725eb7d6-d06e-419d-9e3c-e6f194733e4420224</example>
             public string QrCode { get; set; }
@@ -71,7 +71,7 @@ namespace Core.DTOs
             public int? RefillCount { get; set; }
             /// <summary>Damacana türü</summary>
             /// <example>1</example>
-            public int BottleType { get; set; }
+            public BottleTypes BottleType { get; set; }
         }
         public class BottleUpdate
         {
@@ -87,7 +87,7 @@ namespace Core.DTOs
             public string ProductionDate { get; set; }
             /// <summary>Damacana türü</summary>
             /// <example>1</example>
-            public int BottleType { get; set; }
+            public BottleTypes BottleType { get; set; }
         }
 
         public class BottleStatistics
