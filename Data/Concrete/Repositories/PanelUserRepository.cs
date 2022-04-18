@@ -58,6 +58,7 @@ namespace Data.Concrete.Repositories
                                             UserType = (Types)x.Type,
                                             CreatedDate = x.CreateDate
                                         })
+                                        .Filter(ref filter)
                                         .OrderBy(filter.Order.Field, filter.Order.IsDesc)
                                         .Paginate(filter.PageNumber, filter.PageSize);
         }
