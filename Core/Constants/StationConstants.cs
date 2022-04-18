@@ -7,5 +7,8 @@
             Pre = 1,
             Post
         }
+
+        public const int MinLineNumber = 1;
+        public const int MaxLineNumber = 99;
     }
 }
