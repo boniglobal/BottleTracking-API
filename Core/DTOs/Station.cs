@@ -13,7 +13,7 @@ namespace Core.DTOs
             public DateTimeOffset CreateDate { get; set; }
             /// <summary>Dolum bandı numarası</summary>
             /// <example>1</example>
-            public string ProductionLine { get; set; }
+            public int ProductionLine { get; set; }
             /// <summary>Dolum öncesi-sonrası bilgisi tipi</summary>
             /// <example>1</example>
             public Locations Location { get; set; }
@@ -29,7 +29,7 @@ namespace Core.DTOs
         {
             /// <summary>Dolum bandı numarası</summary>
             /// <example>2</example>
-            public string ProductionLine { get; set; }
+            public int ProductionLine { get; set; }
             /// <summary>Dolum öncesi-sonrası bilgisi</summary>
             /// <example>1</example>
             public Locations Location { get; set; }
@@ -45,7 +45,7 @@ namespace Core.DTOs
             public int StationId { get; set; }
             /// <summary>Band numarası</summary>
             /// <example>4</example>
-            public string ProductionLine { get; set; }
+            public int ProductionLine { get; set; }
             /// <summary>Konum</summary>
             /// <example>1</example>
             public Locations Location { get; set; }
