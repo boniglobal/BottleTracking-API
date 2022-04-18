@@ -26,7 +26,7 @@ namespace Data.Concrete.Repositories
                 ProductionDate = x.ProductionDate,
                 RefillCount = x.RefillCount,
                 LastRefillDate = x.LastRefillDate,
-                BottleType = x.BottleType,
+                BottleType = (BottleTypes)x.BottleType,
                 QrCode = x.QrCode,
                 QrPrintCount = x.QrPrintCount,
                 Status = (UsageStatus)x.Status,
@@ -45,7 +45,7 @@ namespace Data.Concrete.Repositories
                                          ProductionDate = x.ProductionDate,
                                          RefillCount = x.RefillCount,
                                          LastRefillDate = x.LastRefillDate,
-                                         BottleType = x.BottleType,
+                                         BottleType = (BottleTypes)x.BottleType,
                                          QrCode = x.QrCode,
                                          QrPrintCount = x.QrPrintCount,
                                          Status = (UsageStatus)x.Status,
@@ -78,7 +78,7 @@ namespace Data.Concrete.Repositories
             DateTimeOffset productionDate = DateTimeOffset.ParseExact(data.ProductionDate,
                ProductionDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
 
-            bottle.BottleType = data.BottleType;
+            bottle.BottleType = (int)data.BottleType;
             bottle.ProductionDate = productionDate;
 
             _dbContext.SaveChanges();
@@ -104,7 +104,7 @@ namespace Data.Concrete.Repositories
                 ProductionDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
             var bottle = new Bottle
             {
-                BottleType = (int)BottleTypes.L12,
+                BottleType = (int)bottleAdd.BottleType,
                 RefillCount = bottleAdd.RefillCount ?? 0,
                 TrackingId = trackingId,
                 QrCode = QrGenerator(trackingId, productionDate),
@@ -144,7 +144,7 @@ namespace Data.Concrete.Repositories
             {
                 Id = x.Id,
                 QrCode = x.QrCode,
-                BottleType = x.BottleType,
+                BottleType = (BottleTypes)x.BottleType,
                 CreateDate = x.CreateDate,
                 LastRefillDate = x.LastRefillDate,
                 ProductionDate = x.ProductionDate,
