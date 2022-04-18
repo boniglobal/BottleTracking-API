@@ -1,4 +1,6 @@
-﻿namespace Core.DTOs
+﻿using static Core.Constants.StationConstants;
+
+namespace Core.DTOs
 {
     public class Station
     {
@@ -14,7 +16,7 @@
             public string ProductionLine { get; set; }
             /// <summary>Dolum öncesi-sonrası bilgisi tipi</summary>
             /// <example>1</example>
-            public int Location { get; set; }
+            public Locations Location { get; set; }
             /// <summary>İstasyona atanan kullanıcının benzersiz kimlik numarası</summary>
             /// <example>1</example>
             public int PanelUserId { get; set; }
@@ -30,7 +32,7 @@
             public string ProductionLine { get; set; }
             /// <summary>Dolum öncesi-sonrası bilgisi</summary>
             /// <example>1</example>
-            public int Location { get; set; }
+            public Locations Location { get; set; }
             /// <summary>İstasyona atanacak kullanıcının benzersiz kimlik numarası</summary>
             /// <example>2</example>
             public int PanelUserId { get; set; }
@@ -46,7 +48,7 @@
             public string ProductionLine { get; set; }
             /// <summary>Konum</summary>
             /// <example>1</example>
-            public int Location { get; set; }
+            public Locations Location { get; set; }
             /// <summary>İstasyona atanacak kullanıcının benzersiz kimlik numarası</summary>
             /// <example>3</example>
             public int PanelUserId { get; set; }
