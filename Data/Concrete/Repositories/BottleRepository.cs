@@ -64,7 +64,7 @@ namespace Data.Concrete.Repositories
                     foreach (var bottle in bottles)
                     {
                         bottle.Deleted = true;
-                        bottle.LastUpdateDate = DateTime.UtcNow;
+                        bottle.LastUpdateDate = DateTimeOffset.UtcNow;
                     }
                     _dbContext.SaveChanges();
                 }
@@ -80,6 +80,7 @@ namespace Data.Concrete.Repositories
 
             bottle.BottleType = (int)data.BottleType;
             bottle.ProductionDate = productionDate;
+            bottle.LastUpdateDate = DateTimeOffset.UtcNow;
 
             _dbContext.SaveChanges();
         }
