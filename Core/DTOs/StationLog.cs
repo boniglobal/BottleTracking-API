@@ -1,4 +1,5 @@
 ﻿using static Core.Constants.BottleConstants;
+using static Core.Constants.StationConstants;
 
 namespace Core.DTOs
 {
@@ -20,7 +21,7 @@ namespace Core.DTOs
             public string ProductionLine { get; set; }
             /// <summary>Dolum öncesi-sonrası bilgisi</summary>
             /// <example>1</example>
-            public int Location { get; set; }
+            public Locations Location { get; set; }
             /// <summary>Damacana kullanım durumu</summary>
             /// <example>1</example>
             public UsageStatus BottleStatus { get; set; }

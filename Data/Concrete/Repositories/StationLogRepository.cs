@@ -3,6 +3,7 @@ using Data.Abstract;
 using Data.Concrete.Contexts;
 using Entities;
 using static Core.Constants.BottleConstants;
+using static Core.Constants.StationConstants;
 using static Core.DTOs.StationLog;
 using static Core.Extensions.Extensions;
 
@@ -47,7 +48,7 @@ namespace Data.Concrete.Repositories
                             Id = logs.Id,
                             BottleProductionDate = bottles.ProductionDate,
                             BottleStatus = (UsageStatus)logs.Status,
-                            Location = stations.Location,
+                            Location = (Locations)stations.Location,
                             CreatedDate = logs.CreateDate,
                             ProductionLine = stations.ProductionLine,
                             TrackingId = bottles.TrackingId
