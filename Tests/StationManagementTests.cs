@@ -76,18 +76,19 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData(null)]
-        public void StationAddValidator_Should_Have_Validation_Error_For_ProductionLine_Null(string productin_line)
+        [InlineData(100)]
+        public void StationAddValidator_Should_Have_Validation_Error_For_ProductionLine(int production_line)
         {
-            stationAddDto.ProductionLine = productin_line;
+            stationAddDto.ProductionLine = production_line;
             _addValidator.TestValidate(stationAddDto).ShouldHaveValidationErrorFor(x => x.ProductionLine);
         }
 
-        [Fact]
-        public void StationAddValidator_Should_Have_Validation_Error_For_ProductionLine_Empty()
+        [Theory]
+        [InlineData(1)]
+        public void StationAddValidator_Should_Not_Have_Validation_Error_For_ProductionLine(int production_line)
         {
-            stationAddDto.ProductionLine = string.Empty;
-            _addValidator.TestValidate(stationAddDto).ShouldHaveValidationErrorFor(x => x.ProductionLine);
+            stationAddDto.ProductionLine = production_line;
+            _addValidator.TestValidate(stationAddDto).ShouldNotHaveValidationErrorFor(x => x.ProductionLine);
         }
 
         [Theory]
@@ -131,9 +132,9 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData(1, 4, "line_1", 1)]
+        [InlineData(1, 4, 1, 1)]
         public void StationAddValidator_Should_Not_Have_Validation_Errors_Or_Not_Throw_Exception(
-            int userId, int userType, string production_line, int location)
+            int userId, int userType, int production_line, int location)
         {
 
             user.Type = userType;
@@ -184,18 +185,19 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData(null)]
-        public void StationUpdateValidator_Should_Have_Validation_Error_For_ProductionLine_Null(string productin_line)
+        [InlineData(0)]
+        public void StationUpdateValidator_Should_Have_Validation_Error_For_ProductionLine(int production_line)
         {
-            stationUpdateDto.ProductionLine = productin_line;
+            stationUpdateDto.ProductionLine = production_line;
             _updateValidator.TestValidate(stationUpdateDto).ShouldHaveValidationErrorFor(x => x.ProductionLine);
         }
 
-        [Fact]
-        public void StationUpdateValidator_Should_Have_Validation_Error_For_ProductionLine_Empty()
+        [Theory]
+        [InlineData(99)]
+        public void StationUpdateValidator_Should_Not_Have_Validation_Error_For_ProductionLine(int production_line)
         {
-            stationUpdateDto.ProductionLine = string.Empty;
-            _updateValidator.TestValidate(stationUpdateDto).ShouldHaveValidationErrorFor(x => x.ProductionLine);
+            stationUpdateDto.ProductionLine = production_line;
+            _updateValidator.TestValidate(stationUpdateDto).ShouldNotHaveValidationErrorFor(x => x.ProductionLine);
         }
 
         [Theory]
@@ -241,9 +243,9 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData(1, 4, "line_1", 1)]
+        [InlineData(1, 4, 1, 1)]
         public void StationService_Update_Should_Not_Have_Validation_Errors_Or_Not_Throw_Exception(
-            int userId, int userType, string production_line, int location)
+            int userId, int userType, int production_line, int location)
         {
 
             user.Type = userType;
