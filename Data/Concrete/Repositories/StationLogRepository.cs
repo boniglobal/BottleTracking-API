@@ -2,6 +2,7 @@
 using Data.Abstract;
 using Data.Concrete.Contexts;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using static Core.Constants.BottleConstants;
 using static Core.Constants.StationConstants;
 using static Core.DTOs.StationLog;
@@ -39,9 +40,9 @@ namespace Data.Concrete.Repositories
         public PagedData<StationLogGetResponse> GetAll(RequestFilter filter)
         {
             var query = from logs in _dbContext.StationLogs
-                        join stations in _dbContext.Stations
+                        join stations in _dbContext.Stations.IgnoreQueryFilters()
                         on logs.StationId equals stations.Id
-                        join bottles in _dbContext.Bottles
+                        join bottles in _dbContext.Bottles.IgnoreQueryFilters()
                         on logs.BottleId equals bottles.Id
                         select new StationLogGetResponse
                         {
@@ -55,7 +56,8 @@ namespace Data.Concrete.Repositories
                         };
 
 
-            return query.OrderBy(filter.Order.Field, filter.Order.IsDesc)
+            return query.Filter(ref filter)
+                        .OrderBy(filter.Order.Field, filter.Order.IsDesc)
                         .Paginate(filter.PageNumber, filter.PageSize);
 
         }
