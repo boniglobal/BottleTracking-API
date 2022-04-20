@@ -3,6 +3,7 @@ using Business.Utilities;
 using Business.ValidationRules.FluentValidation;
 using Core.Constants;
 using Data.Abstract;
+using Entities;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using Moq;
@@ -391,6 +392,35 @@ namespace Tests
         {
             _resetPassword.Password = password;
             _resetPasswordValidator.TestValidate(_resetPassword).ShouldNotHaveValidationErrorFor(x => x.Password);
+        }
+
+        [Theory]
+        [InlineData(1, "Password123")]
+        public void ResetPassword_Should_Throw_Exception_With_User_Not_Found_Message(int userId, string password)
+        {
+            _resetPassword.UserId = userId;
+            _resetPassword.Password = password;
+
+            _panelUserRepositoryMock.Setup(x => x.GetById(_resetPassword.UserId))
+                                    .Returns((PanelUser)null);
+
+            _panelUserService.Invoking(x => x.ResetPassword(_resetPassword))
+                             .Should().Throw<CustomException>()
+                             .WithMessage(Messages.UserNotFound);
+        }
+
+        [Theory]
+        [InlineData(1, "Password123")]
+        public void ResetPassword_Should_Not_Throw_User_Not_Found_Exception(int userId, string password)
+        {
+            _resetPassword.UserId = userId;
+            _resetPassword.Password = password;
+
+            _panelUserRepositoryMock.Setup(x => x.GetById(_resetPassword.UserId))
+                                    .Returns(new PanelUser { Id = userId });
+
+            _panelUserService.Invoking(x => x.ResetPassword(_resetPassword))
+                             .Should().NotThrow<CustomException>();
         }
     }
 }
