@@ -83,8 +83,9 @@ namespace Data.Concrete.Repositories
         private int CheckBottleStatus(Bottle bottle)
         {
             var bottleProductionDate = bottle.ProductionDate;
+            var bottleExpirationDate = bottleProductionDate.AddYears(BottleUsageTime);
             var stationLog = _dbContext.StationLogs.Where(x => x.Bottle.TrackingId == bottle.TrackingId &&
-                                                               x.CreateDate > bottleProductionDate)
+                                                               x.CreateDate > bottleExpirationDate)
                                                    .FirstOrDefault();
             int status = 0;
             var totalOfDaysBottleIsInUse = (DateTimeOffset.UtcNow.Date - bottleProductionDate.Date).TotalDays;
