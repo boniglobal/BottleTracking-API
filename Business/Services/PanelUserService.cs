@@ -74,7 +74,7 @@ namespace Business.Services
                         Id = user.Id,
                         Email = user.Email,
                         Type = user.Type,
-                        StationId = user.Type == (int)Types.Kiosk ? _userRepository.GetUserStationIdByUserId(user.Id) : null 
+                        StationId = user.Type == (int)Types.Kiosk ? _userRepository.GetUserStationIdByUserId(user.Id) : null
                     };
                 }
             }
@@ -84,13 +84,14 @@ namespace Business.Services
 
         public void ResetPassword(ResetPassword data)
         {
-            _userRepository.ResetPassword(data);
+            var user = CheckIfUserExists(data.UserId);
+            _userRepository.ResetPassword(user, data.Password);
         }
 
         public void Update(PanelUserUpdateRequest data)
         {
             var existingUser = CheckIfEmailIsUnique(data.Email, data.Id);
-            
+
             _userRepository.Update(data, existingUser);
         }
 
@@ -107,6 +108,17 @@ namespace Business.Services
             }
 
             return existingUser;
+        }
+
+        private PanelUser CheckIfUserExists(int userId)
+        {
+            var user = _userRepository.GetById(userId);
+            if (user == null)
+            {
+                throw new CustomException(Messages.UserNotFound, HttpStatusCode.NotFound);
+            }
+
+            return user;
         }
     }
 }
