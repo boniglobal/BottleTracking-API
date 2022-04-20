@@ -8,6 +8,7 @@ namespace Business.ValidationRules.FluentValidation
         public StationAddValidator()
         {
             RuleFor(x => x.Location).NotEmpty();
+            RuleFor(x => x.Location).IsInEnum();
             RuleFor(x => x.ProductionLine).NotEmpty();
         }
     }

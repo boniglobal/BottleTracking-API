@@ -8,6 +8,7 @@ using FluentAssertions;
 using FluentValidation.TestHelper;
 using Moq;
 using Xunit;
+using static Core.Constants.StationConstants;
 using static Core.DTOs.Station;
 
 namespace Tests
@@ -50,10 +51,27 @@ namespace Tests
         }
 
         [Theory]
+        [InlineData(3)]
+        public void StationAddValidator_Should_Have_Validation_Error_For_Location_Not_In_Enum(int location)
+        {
+            stationAddDto.Location = (Locations)location;
+            _addValidator.TestValidate(stationAddDto)
+                         .ShouldHaveValidationErrorFor(x => x.Location);
+        }
+
+        [Theory]
         [InlineData(1)]
         public void AddValidator_Should_Not_Have_Validation_Error_For_Location(int location)
         {
-            stationAddDto.Location = location;
+            stationAddDto.Location = (Locations)location;
+            _addValidator.TestValidate(stationAddDto).ShouldNotHaveValidationErrorFor(x => x.Location);
+        }
+
+        [Theory]
+        [InlineData(2)]
+        public void AddValidator_Should_Not_Have_Validation_Error_For_Location1(int location)
+        {
+            stationAddDto.Location = (Locations)location;
             _addValidator.TestValidate(stationAddDto).ShouldNotHaveValidationErrorFor(x => x.Location);
         }
 
@@ -122,7 +140,7 @@ namespace Tests
 
             stationAddDto.PanelUserId = userId;
             stationAddDto.ProductionLine = production_line;
-            stationAddDto.Location = location;
+            stationAddDto.Location = (Locations)location;
 
             _iPaneUserService.Setup(x => x.GetById(stationAddDto.PanelUserId)).Returns(user);
 
@@ -135,16 +153,33 @@ namespace Tests
         }
 
         [Fact]
-        public void StationUpdateValidator_Should_Have_Validation_Error_For_Location()
+        public void StationUpdateValidator_Should_Have_Validation_Error_For_Location_Empty()
         {
             _updateValidator.TestValidate(stationUpdateDto).ShouldHaveValidationErrorFor(x => x.Location);
         }
 
         [Theory]
-        [InlineData(1)]
-        public void StationUpdateValidator_Should_Not_Have_Validation_Error_For_Location(int location)
+        [InlineData(3)]
+        public void StationUpdateValidator_Should_Have_Validation_Error_For_Location_Not_In_Enum(int location)
         {
-            stationUpdateDto.Location = location;
+            stationUpdateDto.Location = (Locations)location;
+            _updateValidator.TestValidate(stationUpdateDto)
+                         .ShouldHaveValidationErrorFor(x => x.Location);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public void StationUpdateValidator_Should_Not_Have_Validation_Error_For_Location_In_Enum(int location)
+        {
+            stationUpdateDto.Location = (Locations)location;
+            _updateValidator.TestValidate(stationUpdateDto).ShouldNotHaveValidationErrorFor(x => x.Location);
+        }
+
+        [Theory]
+        [InlineData(2)]
+        public void StationUpdateValidator_Should_Not_Have_Validation_Error_For_Location_In_Enum1(int location)
+        {
+            stationUpdateDto.Location = (Locations)location;
             _updateValidator.TestValidate(stationUpdateDto).ShouldNotHaveValidationErrorFor(x => x.Location);
         }
 
@@ -215,7 +250,7 @@ namespace Tests
 
             stationUpdateDto.PanelUserId = userId;
             stationUpdateDto.ProductionLine = production_line;
-            stationUpdateDto.Location = location;
+            stationUpdateDto.Location = (Locations)location;
 
             _iPaneUserService.Setup(x => x.GetById(stationUpdateDto.PanelUserId)).Returns(user);
 

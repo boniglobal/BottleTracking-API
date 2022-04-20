@@ -4,6 +4,7 @@ using Data.Abstract;
 using Data.Concrete.Contexts;
 using static Core.DTOs.Station;
 using Entities;
+using static Core.Constants.StationConstants;
 
 namespace Data.Concrete.Repositories
 {
@@ -20,7 +21,7 @@ namespace Data.Concrete.Repositories
         {
             var station = new Station
             {
-                Location = item.Location,
+                Location = (int)item.Location,
                 PanelUserId = item.PanelUserId,
                 ProductionLine = item.ProductionLine,
                 Deleted = false
@@ -50,7 +51,7 @@ namespace Data.Concrete.Repositories
                             Id = station.Id,
                             PanelUserId = station.PanelUserId,
                             CreateDate = station.CreateDate,
-                            Location = station.Location,
+                            Location = (Locations)station.Location,
                             ProductionLine = station.ProductionLine,
                             Fullname = user.Name + " " + user.Surname
                         };
@@ -81,7 +82,7 @@ namespace Data.Concrete.Repositories
             var station = _dbContext.Stations.Where(x => x.Id == data.StationId).FirstOrDefault();
             if (station != null)
             {
-                station.Location = data.Location;
+                station.Location = (int)data.Location;
                 station.ProductionLine = data.ProductionLine;
                 station.PanelUserId = data.PanelUserId;
 
