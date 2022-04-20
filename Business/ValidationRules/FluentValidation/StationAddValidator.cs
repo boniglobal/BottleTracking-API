@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Core.Constants;
+using FluentValidation;
 using static Core.DTOs.Station;
 
 namespace Business.ValidationRules.FluentValidation
@@ -9,7 +10,7 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(x => x.Location).NotEmpty();
             RuleFor(x => x.Location).IsInEnum();
-            RuleFor(x => x.ProductionLine).NotEmpty();
+            RuleFor(x => x.ProductionLine).InclusiveBetween(StationConstants.MinLineNumber, StationConstants.MaxLineNumber);
         }
     }
 }

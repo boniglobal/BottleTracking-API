@@ -18,7 +18,7 @@ namespace Core.DTOs
             public string TrackingId { get; set; }
             /// <summary>Dolum bandı numarası</summary>
             /// <example>1</example>
-            public string ProductionLine { get; set; }
+            public int ProductionLine { get; set; }
             /// <summary>Dolum öncesi-sonrası bilgisi</summary>
             /// <example>1</example>
             public Locations Location { get; set; }
