@@ -94,13 +94,16 @@ namespace Data.Concrete.Repositories
             {
                 status = (int)UsageStatus.Valid;
             }
-            else if (stationLog != null)
+            else
             {
-                status = (int)UsageStatus.Trash;
-            }
-            else if (stationLog == null || totalOfDaysBottleIsInUse == BottleShelfLife)
-            {
-                status = (int)UsageStatus.Expired;
+                if(stationLog != null)
+                {
+                    status = (int)UsageStatus.Trash;
+                }
+                else
+                {
+                    status = (int)UsageStatus.Expired;
+                }
             }
 
             return status;
