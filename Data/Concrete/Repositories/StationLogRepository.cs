@@ -84,19 +84,20 @@ namespace Data.Concrete.Repositories
         {
             var bottleProductionDate = bottle.ProductionDate;
             var stationLog = _dbContext.StationLogs.Where(x => x.Bottle.TrackingId == bottle.TrackingId &&
-                                                               x.CreateDate.Date < DateTimeOffset.UtcNow.Date)
+                                                               x.CreateDate > bottleProductionDate)
                                                    .FirstOrDefault();
             int status = 0;
+            var totalOfDaysBottleIsInUse = (DateTimeOffset.UtcNow.Date - bottleProductionDate.Date).TotalDays;
 
-            if ((DateTimeOffset.UtcNow.Date - bottleProductionDate).TotalDays < BottleShelfLife)
+            if (totalOfDaysBottleIsInUse < BottleShelfLife)
             {
                 status = (int)UsageStatus.Valid;
             }
-            else if ((DateTimeOffset.UtcNow.Date - bottleProductionDate).TotalDays > BottleShelfLife && stationLog != null)
+            else if (stationLog != null)
             {
                 status = (int)UsageStatus.Trash;
             }
-            else if ((DateTimeOffset.UtcNow.Date - bottleProductionDate).TotalDays > BottleShelfLife && stationLog == null)
+            else if (stationLog == null || totalOfDaysBottleIsInUse == BottleShelfLife)
             {
                 status = (int)UsageStatus.Expired;
             }
