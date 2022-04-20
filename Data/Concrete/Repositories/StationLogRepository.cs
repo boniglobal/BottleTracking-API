@@ -83,7 +83,7 @@ namespace Data.Concrete.Repositories
         private int CheckBottleStatus(Bottle bottle)
         {
             var bottleProductionDate = bottle.ProductionDate;
-            var bottleExpirationDate = bottleProductionDate.AddYears(BottleUsageTime);
+            var bottleExpirationDate = bottleProductionDate.AddDays(BottleShelfLife);
             var stationLog = _dbContext.StationLogs.Where(x => x.Bottle.TrackingId == bottle.TrackingId &&
                                                                x.CreateDate > bottleExpirationDate)
                                                    .FirstOrDefault();
