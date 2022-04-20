@@ -90,15 +90,12 @@ namespace Data.Concrete.Repositories
             return _dbContext.Stations.Where(x => x.PanelUserId == userId).Select(x => x.Id).FirstOrDefault();
         }
 
-        public void ResetPassword(ResetPassword data)
+        public void ResetPassword(PanelUser user, string password)
         {
-            var user = _dbContext.PanelUsers.Where(x => x.Id == data.UserId).FirstOrDefault();
-            if (user != null)
-            {
-                HashingHelper.CreatePasswordHash(data.Password, out string hash, out string salt);
+            
+                HashingHelper.CreatePasswordHash(password, out string hash, out string salt);
                 user.Password = hash;
                 user.PasswordSalt = salt;
-            }
         }
 
         public void Update(PanelUserUpdateRequest data, PanelUser user)
