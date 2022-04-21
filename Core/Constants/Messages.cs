@@ -3,6 +3,8 @@
     public static class Messages
     {
         public const string Unauthorized = "Yetkisiz";
+        public const string InvalidUserInfo = "Geçersiz kullanıcı bilgisi.";
+        public const string InvalidToken = "Geçersiz token";
 
         // Station Management error messages
         public const string AssignDifferentUserType = "İstasyona sadece Kiosk türündeki kullanıcılar atanabilir.";
