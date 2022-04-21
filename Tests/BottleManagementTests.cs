@@ -67,7 +67,7 @@ namespace Tests
             _addDto.ProductionDate = date;
             _bottleAddValidator.TestValidate(_addDto)
                                .ShouldHaveValidationErrorFor(x => x.ProductionDate)
-                               .WithErrorMessage(Messages.InValidDateFormat);
+                               .WithErrorMessage(Messages.InValidDate);
         }
 
         [Theory]
@@ -78,7 +78,18 @@ namespace Tests
             _addDto.ProductionDate = date;
             _bottleAddValidator.TestValidate(_addDto)
                                .ShouldHaveValidationErrorFor(x => x.ProductionDate)
-                               .WithErrorMessage(Messages.InValidDateFormat);
+                               .WithErrorMessage(Messages.InValidDate);
+        }
+
+        [Theory]
+        [InlineData("03/2025")]
+        public void BottleAddValidator_Should_Have_Validation_Error_For_ProductionDate_InvalidDate(string date)
+        {
+
+            _addDto.ProductionDate = date;
+            _bottleAddValidator.TestValidate(_addDto)
+                               .ShouldHaveValidationErrorFor(x => x.ProductionDate)
+                               .WithErrorMessage(Messages.InValidDate);
         }
 
         [Theory]
@@ -146,7 +157,18 @@ namespace Tests
             _updateDto.ProductionDate = dateValue;
             _bottleUpdateValidator.TestValidate(_updateDto)
                                .ShouldHaveValidationErrorFor(x => x.ProductionDate)
-                               .WithErrorMessage(Messages.InValidDateFormat);
+                               .WithErrorMessage(Messages.InValidDate);
+        }
+
+        [Theory]
+        [InlineData("03/2025")]
+        public void BottleUpdateValidator_Should_Have_Validation_Error_For_ProductionDate_InvalidDate(string date)
+        {
+
+            _updateDto.ProductionDate = date;
+            _bottleUpdateValidator.TestValidate(_updateDto)
+                               .ShouldHaveValidationErrorFor(x => x.ProductionDate)
+                               .WithErrorMessage(Messages.InValidDate);
         }
 
         [Theory]
