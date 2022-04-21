@@ -83,22 +83,27 @@ namespace Data.Concrete.Repositories
         private int CheckBottleStatus(Bottle bottle)
         {
             var bottleProductionDate = bottle.ProductionDate;
+            var bottleExpirationDate = bottleProductionDate.AddDays(BottleShelfLife);
             var stationLog = _dbContext.StationLogs.Where(x => x.Bottle.TrackingId == bottle.TrackingId &&
-                                                               x.CreateDate.Date < DateTimeOffset.UtcNow.Date)
+                                                               x.CreateDate > bottleExpirationDate)
                                                    .FirstOrDefault();
             int status = 0;
+            var totalOfDaysBottleIsInUse = (DateTimeOffset.UtcNow.Date - bottleProductionDate.Date).TotalDays;
 
-            if ((DateTimeOffset.UtcNow.Date - bottleProductionDate).TotalDays < BottleShelfLife)
+            if (totalOfDaysBottleIsInUse < BottleShelfLife)
             {
                 status = (int)UsageStatus.Valid;
             }
-            else if ((DateTimeOffset.UtcNow.Date - bottleProductionDate).TotalDays > BottleShelfLife && stationLog != null)
+            else
             {
-                status = (int)UsageStatus.Trash;
-            }
-            else if ((DateTimeOffset.UtcNow.Date - bottleProductionDate).TotalDays > BottleShelfLife && stationLog == null)
-            {
-                status = (int)UsageStatus.Expired;
+                if(stationLog != null)
+                {
+                    status = (int)UsageStatus.Trash;
+                }
+                else
+                {
+                    status = (int)UsageStatus.Expired;
+                }
             }
 
             return status;
