@@ -1,6 +1,7 @@
 ﻿using Business.ValidationRules.FluentValidation;
 using Core.Constants;
 using FluentValidation.TestHelper;
+using System;
 using Xunit;
 using static Core.Constants.BottleConstants;
 using static Core.DTOs.Bottle;
@@ -82,11 +83,15 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData("03/2025")]
-        public void BottleAddValidator_Should_Have_Validation_Error_For_ProductionDate_InvalidDate(string date)
+        [InlineData("03/2022")]
+        public void BottleAddValidator_Should_Have_Validation_Error_For_ProductionDate_InvalidDate(string strDate)
         {
+            DateTimeOffset.TryParseExact(strDate, BottleConstants.ProductionDateFormat,
+                null, System.Globalization.DateTimeStyles.None, out var date);
+            date = DateTimeOffset.UtcNow.AddYears(DateTimeOffset.UtcNow.AddYears(1).Year - date.Year);
 
-            _addDto.ProductionDate = date;
+            _addDto.ProductionDate = date.ToString(BottleConstants.ProductionDateFormat);
+
             _bottleAddValidator.TestValidate(_addDto)
                                .ShouldHaveValidationErrorFor(x => x.ProductionDate)
                                .WithErrorMessage(Messages.InValidDate);
@@ -161,11 +166,14 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData("03/2025")]
-        public void BottleUpdateValidator_Should_Have_Validation_Error_For_ProductionDate_InvalidDate(string date)
+        [InlineData("04/2022")]
+        public void BottleUpdateValidator_Should_Have_Validation_Error_For_ProductionDate_InvalidDate(string strDate)
         {
+            DateTimeOffset.TryParseExact(strDate, BottleConstants.ProductionDateFormat,
+                null, System.Globalization.DateTimeStyles.None, out var date);
+            date = DateTimeOffset.UtcNow.AddYears(DateTimeOffset.UtcNow.AddYears(1).Year - date.Year);
 
-            _updateDto.ProductionDate = date;
+            _updateDto.ProductionDate = date.ToString(BottleConstants.ProductionDateFormat);
             _bottleUpdateValidator.TestValidate(_updateDto)
                                .ShouldHaveValidationErrorFor(x => x.ProductionDate)
                                .WithErrorMessage(Messages.InValidDate);
