@@ -30,7 +30,7 @@ namespace Data.Concrete.Repositories
             {
                 BottleId = bottle.Id,
                 StationId = station.Id,
-                Status = CheckBottleStatus(bottle)
+                Status = BottleStatusHelper.CheckBottleStatus(bottle, _dbContext)
             };
 
             _dbContext.StationLogs.Add(log);
@@ -78,35 +78,6 @@ namespace Data.Concrete.Repositories
                                             .Select(x => x.BottleId)
                                             .Distinct().Count()
             };
-        }
-
-        private int CheckBottleStatus(Bottle bottle)
-        {
-            var bottleProductionDate = bottle.ProductionDate;
-            var bottleExpirationDate = bottleProductionDate.AddDays(BottleShelfLife);
-            var stationLog = _dbContext.StationLogs.Where(x => x.Bottle.TrackingId == bottle.TrackingId &&
-                                                               x.CreateDate > bottleExpirationDate)
-                                                   .FirstOrDefault();
-            int status = 0;
-            var totalOfDaysBottleIsInUse = (DateTimeOffset.UtcNow.Date - bottleProductionDate.Date).TotalDays;
-
-            if (totalOfDaysBottleIsInUse < BottleShelfLife)
-            {
-                status = (int)UsageStatus.Valid;
-            }
-            else
-            {
-                if(stationLog != null)
-                {
-                    status = (int)UsageStatus.Trash;
-                }
-                else
-                {
-                    status = (int)UsageStatus.Expired;
-                }
-            }
-
-            return status;
         }
     }
 }
