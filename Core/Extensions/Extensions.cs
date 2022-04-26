@@ -262,7 +262,8 @@ namespace Core.Extensions
 
         public static DateTimeOffset? ParseDateValue(string value)
         {
-            return DateTimeOffset.TryParse(value, out DateTimeOffset d) ? d : null;
+            return DateTimeOffset.TryParse(value, CultureInfo.InvariantCulture, 
+                                           DateTimeStyles.AssumeUniversal, out DateTimeOffset d) ? d : null;
         }
 
         public static bool? ParseBooleanValue(string value)
