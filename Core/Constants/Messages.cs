@@ -17,6 +17,6 @@
         public const string PasswordWithoutNumber = "Şifre en az bir rakam içermelidir.";
 
         //Bottle Management
-        public const string InValidDateFormat = "Hatalı tarih formatı. Tarih 'AA/YYYY' formatında olmalı.";
+        public const string InValidDate = "Tarih 'AA/YYYY' formatında olmalı ve bugünden ileri olmamalı.";
     }
 }
