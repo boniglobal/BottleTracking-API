@@ -2,17 +2,19 @@
 {
     public static class Messages
     {
-        public const string Unauthorized = "Unauthorized";
+        public const string Unauthorized = "Yetkisiz";
+        public const string InvalidUserInfo = "Geçersiz kullanıcı bilgisi.";
+        public const string InvalidToken = "Geçersiz token";
 
         // Station Management error messages
-        public const string AssignDifferentUserType = "A kiosk user cannot be registered to more than one station.";
-        public const string UserNotFound = "User not found.";
-        public const string AssignUserMoreThanOneStation = "A kiosk user cannot be registered to more than one station.";
+        public const string AssignDifferentUserType = "İstasyona sadece Kiosk türündeki kullanıcılar atanabilir.";
+        public const string UserNotFound = "Kullanıcı bulunamadı.";
+        public const string AssignUserMoreThanOneStation = "Kiosk türündeki bir kullanıcı birden fazla istasyona atanamaz.";
 
         //PanelUser Management
-        public const string NonUniqueEmail = "The email address must be unique.";
-        public const string PasswordWithoutLetter = "Your password must contain at least one letter.";
-        public const string PasswordWithoutNumber = "Your password must contain at least one number.";
+        public const string NonUniqueEmail = "E-posta adresi benzersiz olmalıdır.";
+        public const string PasswordWithoutLetter = "Şifre en az bir harf içermelidir.";
+        public const string PasswordWithoutNumber = "Şifre en az bir rakam içermelidir.";
 
         //Bottle Management
         public const string InValidDateFormat = "Hatalı tarih formatı. Tarih 'AA/YYYY' formatında olmalı.";

@@ -1,4 +1,5 @@
-﻿using Core.Utilities;
+﻿using Core.Constants;
+using Core.Utilities;
 using Core.Utilities.JWT;
 using Data.Abstract;
 using Entities;
@@ -36,7 +37,7 @@ namespace Business.Services
             var checkPassword = (user != null) && HashingHelper.VerifyPasswordHash(authRequest.Password, user.Password, user.PasswordSalt);
             if (checkPassword == false)
             {
-                throw new UnauthorizedAccessException("Invalid user information.");
+                throw new UnauthorizedAccessException(Messages.InvalidUserInfo);
             }
             var sessionId = Guid.NewGuid().ToString();
             refreshToken = _tokenHelper.GenerateRefreshToken(sessionId, authRequest.RememberMe.GetValueOrDefault());
@@ -52,7 +53,7 @@ namespace Business.Services
             var token = _tokenRepository.Get(oldToken);
             if(token == null)
             {
-                throw new UnauthorizedAccessException("Invalid token");
+                throw new UnauthorizedAccessException(Messages.InvalidToken);
             }
 
             var sessionId = token.SessionId;

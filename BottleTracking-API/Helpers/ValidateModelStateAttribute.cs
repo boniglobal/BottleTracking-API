@@ -21,7 +21,7 @@ namespace BottleTracking_API.Helpers
                     Status = new Status
                     {
                         Code = (int)HttpStatusCode.BadRequest,
-                        Message = "One or more validation errors occurred."
+                        Message = "Bir veya birden fazla doğrulama hatası meydana geldi."
                     },
                     Data = errors
                 };
