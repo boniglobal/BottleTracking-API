@@ -81,6 +81,7 @@ namespace Data.Concrete.Repositories
             bottle.BottleType = (int)data.BottleType;
             bottle.ProductionDate = productionDate;
             bottle.LastUpdateDate = DateTimeOffset.UtcNow;
+            bottle.Status = BottleStatusHelper.CheckBottleStatus(bottle, _dbContext);
 
             _dbContext.SaveChanges();
         }
@@ -109,9 +110,10 @@ namespace Data.Concrete.Repositories
                 RefillCount = bottleAdd.RefillCount ?? 0,
                 TrackingId = trackingId,
                 QrCode = QrGenerator(trackingId, productionDate),
-                ProductionDate = productionDate,
-                Status = StatusCheck(productionDate)
+                ProductionDate = productionDate
             };
+
+            bottle.Status = BottleStatusHelper.CheckBottleStatus(bottle);
 
             _dbContext.Bottles.Add(bottle);
             _dbContext.SaveChanges();
@@ -121,22 +123,6 @@ namespace Data.Concrete.Repositories
         private static string QrGenerator(string trackingId, DateTimeOffset productionDate)
         {
             return $"{trackingId}{productionDate.Year}{productionDate.Month}";
-        }
-
-        private static int StatusCheck(DateTimeOffset productionDate)
-        {
-            var current = DateTimeOffset.UtcNow;
-
-            var result = current.Subtract(productionDate).TotalDays;
-
-            if (result < BottleShelfLife)
-            {
-                return (int)UsageStatus.Valid;
-            }
-            else
-            {
-                return (int)UsageStatus.Expired;
-            }
         }
 
         public BottleView GetByQrCode(string qrCode)
