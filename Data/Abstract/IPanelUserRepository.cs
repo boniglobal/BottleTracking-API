@@ -12,7 +12,7 @@ namespace Data.Abstract
         PagedData<PanelUserGetResponse> GetAll(RequestFilter filter);
         List<KioskUserGetResponse> GetUnassignedKioskUsers();
         void Add(PanelUserAddRequest data);
-        void ResetPassword(ResetPassword data);
+        void ResetPassword(PanelUser user, string password);
         void Update(PanelUserUpdateRequest data, PanelUser user);
         void Delete(int id);
     }
