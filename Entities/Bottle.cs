@@ -5,7 +5,7 @@
         public DateTimeOffset ProductionDate { get; set; }
         public int RefillCount { get; set; }
         public int BottleType { get; set; }
-        public string TrackingId { get; set; }
+        public long TrackingId { get; set; }
         public string QrCode { get; set; }
         public int QrPrintCount { get; set; }
         public int Status { get; set; }

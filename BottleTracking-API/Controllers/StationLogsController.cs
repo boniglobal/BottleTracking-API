@@ -45,12 +45,12 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
-        ///<param name="trackingId" example="725eb7d6-d06e-419d-9e3c-e6f194733e44"></param>
+        ///<param name="trackingId" example="815259166761"></param>
         [Authorize("Kiosk")]
         [HttpPost]
         [Route("{trackingId}")]
         [SwaggerOperation(nameof(Add), StationLog.PostDesc)]
-        public dynamic Add(string trackingId)
+        public dynamic Add(long trackingId)
         {
             var user = (UserInfo)Request.HttpContext.Items["UserInfo"];
             _stationLogService.Add(trackingId, user.StationId.GetValueOrDefault());

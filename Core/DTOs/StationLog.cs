@@ -14,8 +14,8 @@ namespace Core.DTOs
             /// <example>2022-04-06T09:24:50.375521+00:00</example>
             public DateTimeOffset BottleProductionDate { get; set; }
             /// <summary>Damacana için oluşturulan benzersiz kimlik</summary>
-            /// <example>e04646f9-4a82-4aed-9298-0f9cc4c6a994</example>
-            public string TrackingId { get; set; }
+            /// <example>815259166761</example>
+            public long TrackingId { get; set; }
             /// <summary>Dolum bandı numarası</summary>
             /// <example>1</example>
             public int ProductionLine { get; set; }

@@ -19,7 +19,7 @@ namespace Data.Concrete.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(string trackingId, int kioskId)
+        public void Add(long trackingId, int kioskId)
         {
             var station = _dbContext.Stations.Where(x => x.Id == kioskId)
                                              .FirstOrDefault();
