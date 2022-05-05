@@ -61,6 +61,33 @@ namespace Tests
         }
 
         [Theory]
+        [InlineData(-1)]
+        public void BottleAddValidator_Should_Have_Validation_Error_For_RefillCount(int refillCount)
+        {
+            _addDto.RefillCount = refillCount;
+            _bottleAddValidator.TestValidate(_addDto)
+                               .ShouldHaveValidationErrorFor(x => x.RefillCount);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        public void BottleAddValidator_Should_Not_Have_Validation_Error_For_RefillCount_Null(int? refillCount)
+        {
+            _addDto.RefillCount = refillCount;
+            _bottleAddValidator.TestValidate(_addDto)
+                               .ShouldNotHaveValidationErrorFor(x => x.RefillCount);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        public void BottleAddValidator_Should_Not_Have_Validation_Error_For_RefillCount(int refillCount)
+        {
+            _addDto.RefillCount = refillCount;
+            _bottleAddValidator.TestValidate(_addDto)
+                               .ShouldNotHaveValidationErrorFor(x => x.RefillCount);
+        }
+
+        [Theory]
         [InlineData("01.2022")]
         public void BottleAddValidator_Should_Have_Validation_Error_For_ProductionDate_InvalidDateFormat(string date)
         {
