@@ -53,7 +53,7 @@ namespace BottleTracking_API.Controllers
         public dynamic Add(long trackingId)
         {
             var user = (UserInfo)Request.HttpContext.Items["UserInfo"];
-            _stationLogService.Add(trackingId, user.StationId.GetValueOrDefault());
+            _stationLogService.Add(trackingId, user.StationId);
             return Messaging.GetResponse(true, null, null, null);
         }
     }

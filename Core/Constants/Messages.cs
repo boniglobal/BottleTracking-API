@@ -18,5 +18,8 @@
 
         //Bottle Management
         public const string InValidDate = "Tarih 'AA/YYYY' formatında olmalı ve bugünden ileri olmamalı.";
+
+        //StationLog Management
+        public const string UserNotAssignedToKiosk = "Kullanıcının bir istasyona atandığından emin olunuz.";
     }
 }

@@ -1,5 +1,8 @@
-﻿using Core.Models;
+﻿using Business.Utilities;
+using Core.Constants;
+using Core.Models;
 using Data.Abstract;
+using System.Net;
 using static Core.DTOs.StationLog;
 
 namespace Business.Services
@@ -8,7 +11,7 @@ namespace Business.Services
     {
         PagedData<StationLogGetResponse> GetAll(RequestFilter filter);
         StationLogStatistics GetLogStatistics();
-        void Add(long trackingId, int kioskId);
+        void Add(long trackingId, int? kioskId);
     }
     public class StationLogService : IStationLogService
     {
@@ -19,9 +22,10 @@ namespace Business.Services
             _stationLogRepository = stationLogRepository;
         }
 
-        public void Add(long trackingId, int kioskId)
+        public void Add(long trackingId, int? kioskId)
         {
-            _stationLogRepository.Add(trackingId, kioskId);
+            CheckWhetherTheUserIsAssignedToAKiosk(kioskId);
+            _stationLogRepository.Add(trackingId, kioskId.GetValueOrDefault());
         }
 
         public PagedData<StationLogGetResponse> GetAll(RequestFilter filter)
@@ -32,6 +36,14 @@ namespace Business.Services
         public StationLogStatistics GetLogStatistics()
         {
             return _stationLogRepository.GetStatistics();
+        }
+
+        private static void CheckWhetherTheUserIsAssignedToAKiosk(int? kioskId)
+        {
+            if (kioskId == null)
+            {
+                throw new CustomException(Messages.UserNotAssignedToKiosk, HttpStatusCode.BadRequest);
+            }
         }
     }
 }
