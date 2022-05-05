@@ -7,8 +7,8 @@ namespace Core.DTOs
         public class BottleStatusGetResponse
         {
             /// <summary>Damacana takibi için oluşturulan benzersiz kimlik</summary>
-            /// <example>e04646f9-4a82-4aed-9298-0f9cc4c6a994</example>
-            public string TrackingId { get; set; }
+            /// <example>815259166761</example>
+            public long TrackingId { get; set; }
             public int QrPrintCount { get; set; }
             /// <summary>Damacana kullanım durumu</summary>
             /// <example>2</example>
@@ -54,8 +54,8 @@ namespace Core.DTOs
             /// <example>2022-04-06T09:24:50.375521+00:00</example>
             public DateTimeOffset CreateDate { get; set; }
             /// <summary>Damacana takibi için oluşturulan benzersiz kimlik</summary>
-            /// <example>e04646f9-4a82-4aed-9298-0f9cc4c6a994</example>
-            public string TrackingId { get; set; }
+            /// <example>815259166761</example>
+            public long TrackingId { get; set; }
         }
 
         public class BottleAdd

@@ -8,7 +8,7 @@ namespace Business.Services
     {
         PagedData<StationLogGetResponse> GetAll(RequestFilter filter);
         StationLogStatistics GetLogStatistics();
-        void Add(string trackingId, int kioskId);
+        void Add(long trackingId, int kioskId);
     }
     public class StationLogService : IStationLogService
     {
@@ -19,7 +19,7 @@ namespace Business.Services
             _stationLogRepository = stationLogRepository;
         }
 
-        public void Add(string trackingId, int kioskId)
+        public void Add(long trackingId, int kioskId)
         {
             _stationLogRepository.Add(trackingId, kioskId);
         }

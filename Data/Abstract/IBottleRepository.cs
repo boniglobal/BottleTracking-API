@@ -6,7 +6,7 @@ namespace Data.Abstract
     public interface IBottleRepository
     {
         BottleView GetById(int id);
-        BottleStatusGetResponse GetBottleStatusByTrackingId(string trackingId);
+        BottleStatusGetResponse GetBottleStatusByTrackingId(long trackingId);
         BottleView GetByQrCode(string qrCode);
         PagedData<BottleView> GetAll(RequestFilter filter);
         BottleStatistics GetStatistics();

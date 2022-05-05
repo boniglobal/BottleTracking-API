@@ -6,16 +6,25 @@ using static Core.DTOs.Bottle;
 using Core.Extensions;
 using Entities;
 using System.Globalization;
+using Core.Utilities.Encryption;
+using Microsoft.Extensions.Configuration;
 
 namespace Data.Concrete.Repositories
 {
     public class BottleRepository : IBottleRepository
     {
         private readonly BottleTrackingDbContext _dbContext;
+        private readonly IAesEncryptor _aesEncryptor;
+        private readonly IConfiguration _configuration;
 
-        public BottleRepository(BottleTrackingDbContext dbContext)
+        public BottleRepository(
+            BottleTrackingDbContext dbContext,
+            IAesEncryptor aesEncryptor, 
+            IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _aesEncryptor = aesEncryptor;
+            _configuration = configuration;
         }
 
         public BottleView GetById(int id)
@@ -101,28 +110,23 @@ namespace Data.Concrete.Repositories
 
         public void Add(BottleAdd bottleAdd)
         {
-            var trackingId = Guid.NewGuid().ToString();
             DateTimeOffset productionDate = DateTimeOffset.ParseExact(bottleAdd.ProductionDate,
                 ProductionDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
             var bottle = new Bottle
             {
                 BottleType = (int)bottleAdd.BottleType,
                 RefillCount = bottleAdd.RefillCount ?? 0,
-                TrackingId = trackingId,
-                QrCode = QrGenerator(trackingId, productionDate),
                 ProductionDate = productionDate
             };
 
             bottle.Status = BottleStatusHelper.CheckBottleStatus(bottle);
-
             _dbContext.Bottles.Add(bottle);
             _dbContext.SaveChanges();
-        }
 
-
-        private static string QrGenerator(string trackingId, DateTimeOffset productionDate)
-        {
-            return $"{trackingId}{productionDate.Year}{productionDate.Month}";
+            var trackingId = Convert.ToInt64($"{bottle.Id}{bottle.ProductionDate.Date:MMyy}");
+            bottle.TrackingId = _aesEncryptor.EncryptData(trackingId);
+            bottle.QrCode = $"{_configuration["QrUrl"]}{bottle.TrackingId}";
+            _dbContext.SaveChanges();
         }
 
         public BottleView GetByQrCode(string qrCode)
@@ -142,7 +146,7 @@ namespace Data.Concrete.Repositories
             }).FirstOrDefault();
         }
 
-        public BottleStatusGetResponse GetBottleStatusByTrackingId(string trackingId)
+        public BottleStatusGetResponse GetBottleStatusByTrackingId(long trackingId)
         {
             return _dbContext.Bottles.Where(x => x.TrackingId == trackingId)
                               .Select(x => new BottleStatusGetResponse

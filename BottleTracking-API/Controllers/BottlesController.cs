@@ -47,13 +47,13 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
-        ///<param name="trackingId" example="725eb7d6-d06e-419d-9e3c-e6f194733e44"></param>
+        ///<param name="trackingId" example="815259166761"></param>
         [Authorize("Admin, Panel, Kiosk")]
         [HttpGet]
         [Route("check-status")]
         [SwaggerOperation(nameof(GetStatus), Bottle.CheckStatusDesc)]
         [ProducesResponseType(typeof(BottleStatusGetResponse), StatusCodes.Status200OK)]
-        public dynamic GetStatus(string trackingId)
+        public dynamic GetStatus(long trackingId)
         {
             var data = _bottleService.GetBottleStatusByTrackingId(trackingId);
             return Messaging.GetResponse(true, null, null, data);

@@ -7,6 +7,6 @@ namespace Data.Abstract
     {
         PagedData<StationLogGetResponse> GetAll(RequestFilter filter);
         StationLogStatistics GetStatistics();
-        void Add(string trackingId, int kioskId);
+        void Add(long trackingId, int kioskId);
     }
 }

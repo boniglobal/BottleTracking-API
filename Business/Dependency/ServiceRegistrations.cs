@@ -1,5 +1,6 @@
 ﻿using Business.Services;
 using Business.ValidationRules.FluentValidation;
+using Core.Utilities.Encryption;
 using Core.Utilities.JWT;
 using Data.Abstract;
 using Data.Concrete.Repositories;
@@ -18,6 +19,7 @@ namespace Business.Dependency
         {
             //Helpers
             services.AddScoped<ITokenHelper, TokenHelper>();
+            services.AddScoped<IAesEncryptor, AesEncryptor>();
 
             //Services
             services.AddScoped<ITokenService, TokenService>();

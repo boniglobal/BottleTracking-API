@@ -1,6 +1,7 @@
 using BottleTracking_API.Dependencies;
 using BottleTracking_API.Helpers;
 using Business.Dependency;
+using Core.Utilities.Encryption;
 using Core.Utilities.JWT;
 using Data.Concrete.Contexts;
 using FluentValidation.AspNetCore;
@@ -43,6 +44,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddOptions<TokenSettings>().Bind(builder.Configuration.GetSection(nameof(TokenSettings)));
+builder.Services.AddOptions<EncryptionSettings>().Bind(builder.Configuration.GetSection(nameof(EncryptionSettings)));
+
 builder.Services.AddCustomServices();
 builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
