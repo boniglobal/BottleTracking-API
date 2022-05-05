@@ -158,5 +158,10 @@ namespace Data.Concrete.Repositories
                                   RefillCount = x.RefillCount
                               }).FirstOrDefault();
         }
+
+        public Bottle GetByTrackingId(long trackingId)
+        {
+            return _dbContext.Bottles.Where(x => x.TrackingId == trackingId).FirstOrDefault();
+        }
     }
 }
