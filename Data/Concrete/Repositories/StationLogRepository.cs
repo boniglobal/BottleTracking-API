@@ -66,10 +66,13 @@ namespace Data.Concrete.Repositories
 
             var totalQuery = query.Count();
 
+            var numberOfDays = (int)(DateTimeOffset.UtcNow.Date - query.Min(x => x.CreateDate.Date)).TotalDays;
+            numberOfDays = numberOfDays == 0 ? 1 : numberOfDays;
+
             return new StationLogStatistics
             {
                 TotalQuery = totalQuery,
-                AverageOfDailyQuery = (totalQuery / (int)(DateTimeOffset.UtcNow.Date - query.Min(x => x.CreateDate.Date)).TotalDays),
+                AverageOfDailyQuery = (int)Math.Ceiling(decimal.Divide(totalQuery, numberOfDays)),
                 NumberOfTodayQuery = query.Where(x => x.CreateDate.Date == DateTimeOffset.UtcNow.Date)
                                             .Count(),
                 NumberOfTodayBottle = query.Where(x => x.CreateDate.Date == DateTimeOffset.UtcNow.Date)
