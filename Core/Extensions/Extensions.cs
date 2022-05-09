@@ -14,7 +14,7 @@ namespace Core.Extensions
             {
                 foreach (var key in filters.Field.Keys)
                 {
-                    var property = typeof(T).GetProperty(key);
+                    var property = typeof(T).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                     if (property != null && filters.Field[key].Values?.Count > 0)
                     {
                         var rule = filters.Field[key].Rule;
@@ -97,7 +97,6 @@ namespace Core.Extensions
                         {
                             Expression<Func<T, bool>> predicate = null;
                             member = Expression.Property(parameter, $"{key}");
-                            var deneme = member.Member;
                             var values = filters.Field[key].Values.Select(x => ParseDateValue(x)).ToList();
                             var type = values.First().GetType();
                             ConstantExpression constant = Expression.Constant(values.First(), member.Type);

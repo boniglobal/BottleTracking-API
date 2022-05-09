@@ -8,7 +8,7 @@ namespace Data.Abstract
     {
         PanelUser GetByEmail(string email);
         PanelUser GetById(int id);
-        int GetUserStationIdByUserId(int userId);
+        int? GetUserStationIdByUserId(int userId);
         PagedData<PanelUserGetResponse> GetAll(RequestFilter filter);
         List<KioskUserGetResponse> GetUnassignedKioskUsers();
         void Add(PanelUserAddRequest data);

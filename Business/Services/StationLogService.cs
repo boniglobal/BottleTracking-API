@@ -1,5 +1,9 @@
-﻿using Core.Models;
+﻿using Business.Utilities;
+using Core.Constants;
+using Core.Models;
 using Data.Abstract;
+using Entities;
+using System.Net;
 using static Core.DTOs.StationLog;
 
 namespace Business.Services
@@ -8,20 +12,26 @@ namespace Business.Services
     {
         PagedData<StationLogGetResponse> GetAll(RequestFilter filter);
         StationLogStatistics GetLogStatistics();
-        void Add(long trackingId, int kioskId);
+        void Add(long trackingId, int? kioskId);
     }
     public class StationLogService : IStationLogService
     {
         private readonly IStationLogRepository _stationLogRepository;
+        private readonly IBottleService _bottleService;
 
-        public StationLogService(IStationLogRepository stationLogRepository)
+        public StationLogService(
+            IStationLogRepository stationLogRepository, 
+            IBottleService bottleService)
         {
             _stationLogRepository = stationLogRepository;
+            _bottleService = bottleService;
         }
 
-        public void Add(long trackingId, int kioskId)
+        public void Add(long trackingId, int? kioskId)
         {
-            _stationLogRepository.Add(trackingId, kioskId);
+            CheckWhetherTheUserIsAssignedToAKiosk(kioskId);
+            var bottle = CheckIfTheBottleExists(trackingId);
+            _stationLogRepository.Add(bottle, kioskId.GetValueOrDefault());
         }
 
         public PagedData<StationLogGetResponse> GetAll(RequestFilter filter)
@@ -32,6 +42,24 @@ namespace Business.Services
         public StationLogStatistics GetLogStatistics()
         {
             return _stationLogRepository.GetStatistics();
+        }
+
+        private static void CheckWhetherTheUserIsAssignedToAKiosk(int? kioskId)
+        {
+            if (kioskId == null)
+            {
+                throw new CustomException(Messages.UserNotAssignedToKiosk, HttpStatusCode.BadRequest);
+            }
+        }
+
+        private Bottle CheckIfTheBottleExists(long trackingId)
+        {
+            var bottle = _bottleService.GetByTrackingId(trackingId);
+            if(bottle == null)
+            {
+                throw new CustomException(Messages.BottleNotFound, HttpStatusCode.NotFound);
+            }
+            return bottle;
         }
     }
 }

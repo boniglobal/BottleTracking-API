@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Data.Abstract;
+using Entities;
 using static Core.DTOs.Bottle;
 
 namespace Business.Services
@@ -7,6 +8,7 @@ namespace Business.Services
     public interface IBottleService
     {
         BottleView GetById(int id);
+        Bottle GetByTrackingId(long trackingId);
         BottleStatusGetResponse GetBottleStatusByTrackingId(long trackingId);
         BottleView GetByQrCode(string qrCode);
         PagedData<BottleView> GetAll(RequestFilter filter);
@@ -26,6 +28,11 @@ namespace Business.Services
         public BottleView GetById(int id)
         {
             return _bottleRepository.GetById(id);
+        }
+
+        public Bottle GetByTrackingId(long trackingId)
+        {
+            return _bottleRepository.GetByTrackingId(trackingId);
         }
 
         public BottleView GetByQrCode(string qrCode)

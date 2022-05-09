@@ -85,9 +85,9 @@ namespace Data.Concrete.Repositories
                                         }).ToList();
         }
 
-        public int GetUserStationIdByUserId(int userId)
+        public int? GetUserStationIdByUserId(int userId)
         {
-            return _dbContext.Stations.Where(x => x.PanelUserId == userId).Select(x => x.Id).FirstOrDefault();
+            return _dbContext.Stations.Where(x => x.PanelUserId == userId).FirstOrDefault()?.Id;
         }
 
         public void ResetPassword(PanelUser user, string password)
