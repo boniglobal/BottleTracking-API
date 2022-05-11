@@ -145,7 +145,7 @@ namespace Core.Extensions
         {
             if (!string.IsNullOrEmpty(field))
             {
-                var property = typeof(T).GetProperty(field);
+                var property = typeof(T).GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                 if (property != null)
                 {
                     var parameter = Expression.Parameter(typeof(T));
