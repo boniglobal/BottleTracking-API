@@ -75,6 +75,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfigurations();
 
+builder.Services.AddSerilogConfigurations(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -90,6 +92,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("DefaultPolicy");
 
+app.UseMiddleware<RequestLogContextMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
