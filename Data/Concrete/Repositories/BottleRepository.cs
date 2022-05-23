@@ -19,7 +19,7 @@ namespace Data.Concrete.Repositories
 
         public BottleRepository(
             BottleTrackingDbContext dbContext,
-            IAesEncryptor aesEncryptor, 
+            IAesEncryptor aesEncryptor,
             IConfiguration configuration)
         {
             _dbContext = dbContext;
@@ -129,21 +129,22 @@ namespace Data.Concrete.Repositories
             _dbContext.SaveChanges();
         }
 
-        public BottleView GetByQrCode(string qrCode)
+        public BottleView GetDetailByTrackingId(long trackingId)
         {
-            return _dbContext.Bottles.Where(x => x.QrCode == qrCode).Select(x => new BottleView
-            {
-                Id = x.Id,
-                QrCode = x.QrCode,
-                BottleType = (BottleTypes)x.BottleType,
-                CreateDate = x.CreateDate,
-                LastRefillDate = x.LastRefillDate,
-                ProductionDate = x.ProductionDate,
-                QrPrintCount = x.QrPrintCount,
-                RefillCount = x.RefillCount,
-                Status = (UsageStatus)x.Status,
-                TrackingId = x.TrackingId
-            }).FirstOrDefault();
+            return _dbContext.Bottles.Where(x => x.TrackingId == trackingId)
+                                     .Select(x => new BottleView
+                                     {
+                                         Id = x.Id,
+                                         QrCode = x.QrCode,
+                                         BottleType = (BottleTypes)x.BottleType,
+                                         CreateDate = x.CreateDate,
+                                         LastRefillDate = x.LastRefillDate,
+                                         ProductionDate = x.ProductionDate,
+                                         QrPrintCount = x.QrPrintCount,
+                                         RefillCount = x.RefillCount,
+                                         Status = (UsageStatus)x.Status,
+                                         TrackingId = x.TrackingId
+                                     }).FirstOrDefault();
         }
 
         public BottleStatusGetResponse GetBottleStatusByTrackingId(long trackingId)

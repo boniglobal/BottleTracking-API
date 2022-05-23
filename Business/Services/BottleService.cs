@@ -10,7 +10,7 @@ namespace Business.Services
         BottleView GetById(int id);
         Bottle GetByTrackingId(long trackingId);
         BottleStatusGetResponse GetBottleStatusByTrackingId(long trackingId);
-        BottleView GetByQrCode(string qrCode);
+        BottleView GetDetailByTrackingId(long trackingId);
         PagedData<BottleView> GetAll(RequestFilter filter);
         BottleStatistics GetStatistics();
         void Add(BottleAdd bottleAdd);
@@ -35,9 +35,9 @@ namespace Business.Services
             return _bottleRepository.GetByTrackingId(trackingId);
         }
 
-        public BottleView GetByQrCode(string qrCode)
+        public BottleView GetDetailByTrackingId(long trackingId)
         {
-            return _bottleRepository.GetByQrCode(qrCode);
+            return _bottleRepository.GetDetailByTrackingId(trackingId);
         }
 
         public PagedData<BottleView> GetAll(RequestFilter filter)
