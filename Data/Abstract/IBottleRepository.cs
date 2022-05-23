@@ -9,7 +9,7 @@ namespace Data.Abstract
         BottleView GetById(int id);
         Bottle GetByTrackingId(long trackingId);
         BottleStatusGetResponse GetBottleStatusByTrackingId(long trackingId);
-        BottleView GetByQrCode(string qrCode);
+        BottleView GetDetailByTrackingId(long trackingId);
         PagedData<BottleView> GetAll(RequestFilter filter);
         BottleStatistics GetStatistics();
         void Add(BottleAdd bottleAdd);

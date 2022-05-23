@@ -35,15 +35,15 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, data);
         }
 
-        /// <param name="qrCode" example="725eb7d6-d06e-419d-9e3c-e6f194733e4420224"></param>
+        /// <param name="trackingId" example="815259166761"></param>
         [Authorize("Admin, Panel, Printer")]
         [HttpGet]
-        [Route("{qrCode}")]
-        [SwaggerOperation(nameof(Get), Bottle.GetbyQrDesc)]
+        [Route("{trackingId}")]
+        [SwaggerOperation(nameof(Get), Bottle.GetByTrackingId)]
         [ProducesResponseType(typeof(BottleView), StatusCodes.Status200OK)]
-        public dynamic Get(string qrCode)
+        public dynamic Get(long trackingId)
         {
-            var data = _bottleService.GetByQrCode(qrCode);
+            var data = _bottleService.GetDetailByTrackingId(trackingId);
             return Messaging.GetResponse(true, null, null, data);
         }
 

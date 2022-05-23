@@ -14,7 +14,7 @@
             public const string GetDesc = "Belirtilen benzersiz kimlik numarasına sahip " +
                 "damacana detaylarını alır.<br /> " +
                 "Bu işlemi yalnızca <b>Admin, Panel, Printer</b> türündeki kullanıcılar gerçekleştirebilir.";
-            public const string GetbyQrDesc = "Belirtilen QR koduna sahip damacana detaylarını alır.<br /> " +
+            public const string GetByTrackingId = "Belirtilen benzersiz takip numarasına (TrackingId) sahip damacana detaylarını alır.<br /> " +
                 "Bu işlemi yalnızca <b>Admin, Panel, Printer</b> türündeki kullanıcılar gerçekleştirebilir.";
             public const string CheckStatusDesc = "Belirtilen benzersiz takip numarasına (TrackingId) sahip " +
                 "damacananın kullanım durumu detaylarını alır.<br /> " +
