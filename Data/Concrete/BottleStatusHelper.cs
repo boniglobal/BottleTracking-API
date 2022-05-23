@@ -24,7 +24,7 @@ namespace Data.Concrete
             }
             else
             {
-                if (stationLog != null)
+                if (stationLog != null || bottle.Status == (int)UsageStatus.Expired)
                 {
                     status = (int)UsageStatus.Trash;
                 }
