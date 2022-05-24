@@ -19,7 +19,7 @@ namespace Core.DTOs
             public Locations Location { get; set; }
             /// <summary>İstasyona atanan kullanıcının benzersiz kimlik numarası</summary>
             /// <example>1</example>
-            public int PanelUserId { get; set; }
+            public int? PanelUserId { get; set; }
             /// <summary>Kullanıcı adı ve soyadı</summary>
             /// <example>Uğur Timurçin</example>
             public string Fullname { get; set; }
