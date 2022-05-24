@@ -5,6 +5,7 @@ using Data.Concrete.Contexts;
 using static Core.DTOs.Station;
 using Entities;
 using static Core.Constants.StationConstants;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Concrete.Repositories
 {
@@ -44,16 +45,16 @@ namespace Data.Concrete.Repositories
         public PagedData<StationListView> GetAll(RequestFilter filter)
         {
             var query = from station in _dbContext.Stations
-                        join user in _dbContext.PanelUsers
+                        join user in _dbContext.PanelUsers.IgnoreQueryFilters()
                         on station.PanelUserId equals user.Id
                         select new StationListView
                         {
                             Id = station.Id,
-                            PanelUserId = station.PanelUserId,
+                            PanelUserId = !user.Deleted ? station.PanelUserId : null,
                             CreateDate = station.CreateDate,
                             Location = (Locations)station.Location,
                             ProductionLine = station.ProductionLine,
-                            Fullname = user.Name + " " + user.Surname
+                            Fullname = !user.Deleted ? user.Name + " " + user.Surname : null
                         };
 
             return query.Filter(ref filter)
