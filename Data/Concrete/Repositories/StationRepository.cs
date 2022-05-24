@@ -44,7 +44,7 @@ namespace Data.Concrete.Repositories
 
         public PagedData<StationListView> GetAll(RequestFilter filter)
         {
-            var query = from station in _dbContext.Stations
+            var query = from station in _dbContext.Stations.Where(x => !x.Deleted)
                         join user in _dbContext.PanelUsers.IgnoreQueryFilters()
                         on station.PanelUserId equals user.Id
                         select new StationListView
