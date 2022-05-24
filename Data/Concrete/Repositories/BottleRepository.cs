@@ -82,17 +82,17 @@ namespace Data.Concrete.Repositories
 
         public void Update(BottleUpdate data)
         {
-            var bottle = _dbContext.Bottles.Where(x => x.Id == data.Id).FirstOrDefault();
+            //var bottle = _dbContext.Bottles.Where(x => x.Id == data.Id).FirstOrDefault();
 
-            DateTimeOffset productionDate = DateTimeOffset.ParseExact(data.ProductionDate,
-               ProductionDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+            //DateTimeOffset productionDate = DateTimeOffset.ParseExact(data.ProductionDate,
+            //   ProductionDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
 
-            bottle.BottleType = (int)data.BottleType;
-            bottle.ProductionDate = productionDate;
-            bottle.LastUpdateDate = DateTimeOffset.UtcNow;
-            bottle.Status = BottleStatusHelper.CheckBottleStatus(bottle, _dbContext);
+            //bottle.BottleType = (int)data.BottleType;
+            //bottle.ProductionDate = productionDate;
+            //bottle.LastUpdateDate = DateTimeOffset.UtcNow;
+            //bottle.Status = BottleStatusHelper.CheckBottleStatus(bottle, _dbContext);
 
-            _dbContext.SaveChanges();
+            //_dbContext.SaveChanges();
         }
 
         public BottleStatistics GetStatistics()

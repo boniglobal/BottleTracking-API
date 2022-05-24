@@ -89,6 +89,7 @@ namespace BottleTracking_API.Controllers
             return Messaging.GetResponse(true, null, null, null);
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Authorize("Admin, Panel, Printer")]
         [HttpPut]
         [SwaggerOperation(nameof(Update), Bottle.PutDesc)]
