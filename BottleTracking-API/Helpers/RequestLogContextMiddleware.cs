@@ -51,11 +51,19 @@ namespace BottleTracking_API.Helpers
                 }
             }
 
+            if (requestBody.Contains("password"))
+            {
+                requestBody = requestBody.Split("password").FirstOrDefault();
+            }
+
             int responseCode = context.Response.StatusCode;
             var user = (UserInfo)context.Items["UserInfo"];
 
-            _logger.LogInformation("{endpoint} {body} {response_code} {response_message} {ip_address} {user_id} {request_timestamp}", 
+            if (!endpoint.Contains("/swagger"))
+            {
+                _logger.LogInformation("{endpoint} {body} {response_code} {response_message} {ip_address} {user_id} {request_timestamp}",
                 endpoint, requestBody, responseCode, responseBody, ipAddress, user?.Id, requestTimestamp);
+            }
         }
     }
 }
