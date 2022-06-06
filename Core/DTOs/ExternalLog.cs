@@ -1,6 +1,6 @@
 ﻿namespace Core.DTOs
 {
-    public class Logging
+    public class ExternalLog
     {
         public string Endpoint { get; set; }
         public int ResponseCode { get; set; }

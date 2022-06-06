@@ -19,7 +19,7 @@ namespace BottleTracking_API.Controllers
 
         [Authorize("Admin, Panel, Printer, Kiosk")]
         [HttpPost]
-        public dynamic Add(Logging log)
+        public dynamic Add(ExternalLog log)
         {
             var ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
             var user = (UserInfo)Request.HttpContext.Items["UserInfo"];
