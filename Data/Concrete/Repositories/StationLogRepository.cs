@@ -48,7 +48,7 @@ namespace Data.Concrete.Repositories
                             BottleProductionDate = bottles.ProductionDate,
                             BottleStatus = (UsageStatus)logs.Status,
                             Location = (Locations)stations.Location,
-                            CreatedDate = logs.CreateDate,
+                            CreatedDate = logs.CreateDate.AddHours(3),
                             ProductionLine = stations.ProductionLine,
                             TrackingId = bottles.TrackingId
                         };
