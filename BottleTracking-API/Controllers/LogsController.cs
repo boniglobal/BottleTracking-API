@@ -23,8 +23,9 @@ namespace BottleTracking_API.Controllers
         {
             var ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
             var user = (UserInfo)Request.HttpContext.Items["UserInfo"];
+            var userId = user?.Id ?? -1;
             _logger.Log(logLevel: LogLevel.None, "{endpoint} {user_id} {ip_address} {response_code} {response_message} {request_timestamp}", 
-                log.Endpoint, user?.Id, ipAddress, log.ResponseCode, log.ResponseMessage, log.RequestTimestamp);
+                log.Endpoint, userId, ipAddress, log.ResponseCode, log.ResponseMessage, log.RequestTimestamp);
             return Messaging.GetResponse(true, null, null, null);
         }
     }
