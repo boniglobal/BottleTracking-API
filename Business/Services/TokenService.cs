@@ -92,6 +92,7 @@ namespace Business.Services
             {
                 Name = fullName,
                 Email = user.Email,
+                UserType = user.Type,
                 AccessToken = accessToken.Token,
                 TokenExpiration = accessToken.Expiration
             };
