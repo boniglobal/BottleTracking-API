@@ -33,7 +33,7 @@ namespace Business.Services
 
         public void Add(PanelUserAddRequest data)
         {
-            CheckIfEmailIsUnique(data.Email);
+            GetUserByUniqueEmail(data.Email);
             _userRepository.Add(data);
         }
 
@@ -84,18 +84,18 @@ namespace Business.Services
 
         public void ResetPassword(ResetPassword data)
         {
-            var user = CheckIfUserExists(data.UserId);
+            var user = GetUserById(data.UserId);
             _userRepository.ResetPassword(user, data.Password);
         }
 
         public void Update(PanelUserUpdateRequest data)
         {
-            var existingUser = CheckIfEmailIsUnique(data.Email, data.Id);
+            var existingUser = GetUserByUniqueEmail(data.Email, data.Id);
 
             _userRepository.Update(data, existingUser);
         }
 
-        private PanelUser CheckIfEmailIsUnique(string email, int? userId = null)
+        private PanelUser GetUserByUniqueEmail(string email, int? userId = null)
         {
             var existingUser = _userRepository.GetByEmail(email);
             if (userId == null && existingUser != null)
@@ -110,7 +110,7 @@ namespace Business.Services
             return existingUser;
         }
 
-        private PanelUser CheckIfUserExists(int userId)
+        private PanelUser GetUserById(int userId)
         {
             var user = _userRepository.GetById(userId);
             if (user == null)

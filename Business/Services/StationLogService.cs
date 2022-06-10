@@ -29,8 +29,8 @@ namespace Business.Services
 
         public void Add(long trackingId, int? kioskId)
         {
-            CheckWhetherTheUserIsAssignedToAKiosk(kioskId);
-            var bottle = CheckIfTheBottleExists(trackingId);
+            CheckIfUserIsAssignedToKiosk(kioskId);
+            var bottle = GetBottleByTrackingId(trackingId);
             _stationLogRepository.Add(bottle, kioskId.GetValueOrDefault());
         }
 
@@ -44,7 +44,7 @@ namespace Business.Services
             return _stationLogRepository.GetStatistics();
         }
 
-        private static void CheckWhetherTheUserIsAssignedToAKiosk(int? kioskId)
+        private static void CheckIfUserIsAssignedToKiosk(int? kioskId)
         {
             if (kioskId == null)
             {
@@ -52,10 +52,10 @@ namespace Business.Services
             }
         }
 
-        private Bottle CheckIfTheBottleExists(long trackingId)
+        private Bottle GetBottleByTrackingId(long trackingId)
         {
             var bottle = _bottleService.GetByTrackingId(trackingId);
-            if(bottle == null)
+            if (bottle == null)
             {
                 throw new CustomException(Messages.BottleNotFound, HttpStatusCode.NotFound);
             }
