@@ -12,6 +12,7 @@ namespace Business.Services
     public interface IStationService
     {
         PagedData<StationListView> GetAll(RequestFilter filter);
+        Station GetById(int id);
         Station GetByPanelUserId(int id);
         StationStatistics GetStatistics();
         void Add(StationAdd station);
@@ -46,6 +47,11 @@ namespace Business.Services
         public PagedData<StationListView> GetAll(RequestFilter filter)
         {
             return _stationRepository.GetAll(filter);
+        }
+
+        public Station GetById(int id)
+        {
+            return _stationRepository.GetById(id);
         }
 
         public Station GetByPanelUserId(int id)
