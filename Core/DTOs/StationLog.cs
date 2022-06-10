@@ -25,6 +25,12 @@ namespace Core.DTOs
             /// <summary>Damacana kullanım durumu</summary>
             /// <example>1</example>
             public UsageStatus BottleStatus { get; set; }
+            /// <summary>Damacanayı dolum sonrası teslim alan saka kimlik bilgisi</summary>
+            /// <example>703558</example>
+            public string DistributorId { get; set; }
+            /// <summary>Damacananın dağıtıma çıkmak üzere işaretlendiği bölge</summary>
+            /// <example>Reşitpaşa Mahallesi</example>
+            public string DistributionRegion { get; set; }
             /// <summary>Sorgunun yapıldığı tarih </summary>
             /// <example>2022-04-06T09:24:50.375521+00:00</example>
             public DateTimeOffset CreatedDate { get; set; }
