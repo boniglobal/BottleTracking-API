@@ -22,6 +22,9 @@
             /// <summary>Kullanıcı e-posta adresi</summary>
             /// <example>hakanyaman@boniglobal.com</example>
             public string Email { get; set; }
+            /// <summary>Kullanıcı tipi</summary>
+            /// <example>Admin</example>
+            public string UserType { get; set; }
             /// <summary>Sisteme erişim için oluşturulan token</summary>
             /// <example>eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXN</example>
             public string AccessToken { get; set; }
