@@ -48,7 +48,7 @@ namespace BottleTracking_API.Controllers
         }
 
         ///<param name="trackingId" example="815259166761"></param>
-        [Authorize("Admin, Panel, Kiosk")]
+        //[Authorize("Admin, Panel, Kiosk")]
         [HttpGet]
         [Route("check-status")]
         [SwaggerOperation(nameof(GetStatus), Bottle.CheckStatusDesc)]
