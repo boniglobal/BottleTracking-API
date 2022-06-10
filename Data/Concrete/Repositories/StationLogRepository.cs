@@ -19,19 +19,16 @@ namespace Data.Concrete.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(Bottle bottle, int kioskId)
+        public void Add(StationLogAdd log, Bottle bottle, int stationId)
         {
-            var station = _dbContext.Stations.Where(x => x.Id == kioskId)
-                                             .FirstOrDefault();
-
-            var log = new StationLog
+            _dbContext.StationLogs.Add(new StationLog
             {
                 BottleId = bottle.Id,
-                StationId = station.Id,
-                Status = BottleStatusHelper.CheckBottleStatus(bottle, _dbContext)
-            };
-
-            _dbContext.StationLogs.Add(log);
+                StationId = stationId,
+                Status = BottleStatusHelper.CheckBottleStatus(bottle, _dbContext),
+                DistributorId = log.DistributorId,
+                DistributionRegion = log.DistributionRegion
+            });
             _dbContext.SaveChanges();
         }
 
@@ -50,9 +47,10 @@ namespace Data.Concrete.Repositories
                             Location = (Locations)stations.Location,
                             CreatedDate = logs.CreateDate.AddHours(3),
                             ProductionLine = stations.ProductionLine,
-                            TrackingId = bottles.TrackingId
+                            TrackingId = bottles.TrackingId,
+                            DistributorId = logs.DistributorId,
+                            DistributionRegion = logs.DistributionRegion
                         };
-
 
             return query.Filter(ref filter)
                         .OrderBy(filter.Order.Field, filter.Order.IsDesc)

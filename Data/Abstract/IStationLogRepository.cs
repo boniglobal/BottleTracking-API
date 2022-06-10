@@ -8,6 +8,6 @@ namespace Data.Abstract
     {
         PagedData<StationLogGetResponse> GetAll(RequestFilter filter);
         StationLogStatistics GetStatistics();
-        void Add(Bottle bottle, int kioskId);
+        void Add(StationLogAdd log, Bottle bottle, int stationId);
     }
 }

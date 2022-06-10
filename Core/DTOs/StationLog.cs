@@ -51,5 +51,18 @@ namespace Core.DTOs
             /// <example>3</example>
             public int NumberOfTodayBottle { get; set; }
         }
+
+        public class StationLogAdd
+        {
+            /// <summary>Damacana için oluşturulan benzersiz kimlik</summary>
+            /// <example>815259166761</example>
+            public long TrackingId { get; set; }
+            /// <summary>Damacanayı dolum sonrası teslim alan saka kimlik bilgisi</summary>
+            /// <example>703558</example>
+            public string DistributorId { get; set; }
+            /// <summary>Damacananın dağıtıma çıkmak üzere işaretlendiği bölge</summary>
+            /// <example>Reşitpaşa Mahallesi</example>
+            public string DistributionRegion { get; set; }
+        }
     }
 }
