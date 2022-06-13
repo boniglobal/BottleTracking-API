@@ -33,7 +33,6 @@ namespace Business.Services
         public void Add(StationLogAdd log, int? kioskId)
         {
             var station = GetStationById(kioskId);
-            CheckStationLocationForDistributorInfo(ref log, station.Location);
             var bottle = GetBottleByTrackingId(log.TrackingId);
             _stationLogRepository.Add(log, bottle, station.Id);
         }
@@ -72,16 +71,6 @@ namespace Business.Services
                 throw new CustomException(Messages.BottleNotFound, HttpStatusCode.NotFound);
             }
             return bottle;
-        }
-
-        private static void CheckStationLocationForDistributorInfo(ref StationLogAdd log, int stationLocation)
-        {
-            //clear distributor info if station is located at the start of the line
-            if (stationLocation == (int)StationConstants.Locations.Pre)
-            {
-                log.DistributorId = null;
-                log.DistributionRegion = null;
-            }
         }
     }
 }
