@@ -62,6 +62,11 @@ namespace Data.Concrete.Repositories
                         .Paginate(filter.PageNumber, filter.PageSize);
         }
 
+        public Station GetById(int id)
+        {
+            return _dbContext.Stations.Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public Station GetByPanelUserId(int id)
         {
             return _dbContext.Stations.Where(x => x.PanelUserId == id).FirstOrDefault();

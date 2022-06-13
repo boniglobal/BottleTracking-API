@@ -40,7 +40,9 @@ namespace Data.Concrete.Repositories
                 QrPrintCount = x.QrPrintCount,
                 Status = (UsageStatus)x.Status,
                 CreateDate = x.CreateDate,
-                TrackingId = x.TrackingId
+                TrackingId = x.TrackingId,
+                LastDistributorId = x.LastDistributorId,
+                LastDistributionRegion = x.LastDistributionRegion
             }).FirstOrDefault();
         }
 
@@ -59,7 +61,9 @@ namespace Data.Concrete.Repositories
                                          QrPrintCount = x.QrPrintCount,
                                          Status = (UsageStatus)x.Status,
                                          CreateDate = x.CreateDate,
-                                         TrackingId = x.TrackingId
+                                         TrackingId = x.TrackingId,
+                                         LastDistributorId = x.LastDistributorId,
+                                         LastDistributionRegion = x.LastDistributionRegion
                                      }).Paginate(filter.PageNumber, filter.PageSize);
         }
 
@@ -143,7 +147,9 @@ namespace Data.Concrete.Repositories
                                          QrPrintCount = x.QrPrintCount,
                                          RefillCount = x.RefillCount,
                                          Status = (UsageStatus)x.Status,
-                                         TrackingId = x.TrackingId
+                                         TrackingId = x.TrackingId,
+                                         LastDistributorId = x.LastDistributorId,
+                                         LastDistributionRegion = x.LastDistributionRegion
                                      }).FirstOrDefault();
         }
 
@@ -156,7 +162,8 @@ namespace Data.Concrete.Repositories
                                   Status = (UsageStatus)x.Status,
                                   LastRefillDate = x.LastRefillDate,
                                   ProductionDate = x.ProductionDate,
-                                  RefillCount = x.RefillCount
+                                  RefillCount = x.RefillCount,
+                                  LastDistributorId = x.LastDistributorId
                               }).FirstOrDefault();
         }
 

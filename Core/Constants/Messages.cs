@@ -21,6 +21,7 @@
 
         //StationLog Management
         public const string UserNotAssignedToKiosk = "Kullanıcının bir istasyona atandığından emin olunuz.";
+        public const string StationNotFound = "Kullanıcıya atalı istasyon bulunamadı.";
         public const string BottleNotFound = "Sisteme kayıtlı damacana bulunamadı.";
     }
 }

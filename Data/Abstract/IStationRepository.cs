@@ -7,6 +7,7 @@ namespace Data.Abstract
     public interface IStationRepository
     {
         PagedData<StationListView> GetAll(RequestFilter filter);
+        Station GetById(int id);
         Station GetByPanelUserId(int id);
         StationStatistics GetStatistics();
         void Add(StationAdd data);

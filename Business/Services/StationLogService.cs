@@ -12,26 +12,30 @@ namespace Business.Services
     {
         PagedData<StationLogGetResponse> GetAll(RequestFilter filter);
         StationLogStatistics GetLogStatistics();
-        void Add(long trackingId, int? kioskId);
+        void Add(StationLogAdd log, int? kioskId);
     }
     public class StationLogService : IStationLogService
     {
         private readonly IStationLogRepository _stationLogRepository;
         private readonly IBottleService _bottleService;
+        private readonly IStationService _stationService;
 
         public StationLogService(
             IStationLogRepository stationLogRepository, 
-            IBottleService bottleService)
+            IBottleService bottleService,
+            IStationService stationService)
         {
             _stationLogRepository = stationLogRepository;
+            _stationService = stationService;
             _bottleService = bottleService;
         }
 
-        public void Add(long trackingId, int? kioskId)
+        public void Add(StationLogAdd log, int? kioskId)
         {
-            CheckIfUserIsAssignedToKiosk(kioskId);
-            var bottle = GetBottleByTrackingId(trackingId);
-            _stationLogRepository.Add(bottle, kioskId.GetValueOrDefault());
+            var station = GetStationById(kioskId);
+            CheckStationLocationForDistributorInfo(ref log, station.Location);
+            var bottle = GetBottleByTrackingId(log.TrackingId);
+            _stationLogRepository.Add(log, bottle, station.Id);
         }
 
         public PagedData<StationLogGetResponse> GetAll(RequestFilter filter)
@@ -44,12 +48,20 @@ namespace Business.Services
             return _stationLogRepository.GetStatistics();
         }
 
-        private static void CheckIfUserIsAssignedToKiosk(int? kioskId)
+        private Station GetStationById(int? id)
         {
-            if (kioskId == null)
+            if (id == null)
             {
                 throw new CustomException(Messages.UserNotAssignedToKiosk, HttpStatusCode.BadRequest);
             }
+
+            var station = _stationService.GetById(id.GetValueOrDefault());
+            if (id == null)
+            {
+                throw new CustomException(Messages.StationNotFound, HttpStatusCode.BadRequest);
+            }
+
+            return station;
         }
 
         private Bottle GetBottleByTrackingId(long trackingId)
@@ -60,6 +72,16 @@ namespace Business.Services
                 throw new CustomException(Messages.BottleNotFound, HttpStatusCode.NotFound);
             }
             return bottle;
+        }
+
+        private static void CheckStationLocationForDistributorInfo(ref StationLogAdd log, int stationLocation)
+        {
+            //clear distributor info if station is located at the start of the line
+            if (stationLocation == (int)StationConstants.Locations.Pre)
+            {
+                log.DistributorId = null;
+                log.DistributionRegion = null;
+            }
         }
     }
 }

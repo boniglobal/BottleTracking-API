@@ -22,6 +22,9 @@ namespace Core.DTOs
             /// <summary>Son dolum tarihi</summary>
             /// <example>2022-04-08T09:24:50.375521+00:00</example>
             public DateTimeOffset LastRefillDate { get; set; }
+            /// <summary>Damacanayı en son teslim alan saka kimlik bilgisi</summary>
+            /// <example>703558</example>
+            public string LastDistributorId { get; set; }
         }
 
         public class BottleView
@@ -56,6 +59,12 @@ namespace Core.DTOs
             /// <summary>Damacana takibi için oluşturulan benzersiz kimlik</summary>
             /// <example>815259166761</example>
             public long TrackingId { get; set; }
+            /// <summary>Damacanayı en son teslim alan saka kimlik bilgisi</summary>
+            /// <example>703558</example>
+            public string LastDistributorId { get; set; }
+            /// <summary>Damacananın dağıtıma çıkmak üzere işaretlendiği son bölge</summary>
+            /// <example>Reşitpaşa Mahallesi</example>
+            public string LastDistributionRegion { get; set; }
         }
 
         public class BottleAdd
