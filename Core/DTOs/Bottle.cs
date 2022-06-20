@@ -21,7 +21,7 @@ namespace Core.DTOs
             public int RefillCount { get; set; }
             /// <summary>Son dolum tarihi</summary>
             /// <example>2022-04-08T09:24:50.375521+00:00</example>
-            public DateTimeOffset LastRefillDate { get; set; }
+            public DateTimeOffset? LastRefillDate { get; set; }
             /// <summary>Damacanayı en son teslim alan saka kimlik bilgisi</summary>
             /// <example>703558</example>
             public string LastDistributorId { get; set; }
@@ -40,7 +40,7 @@ namespace Core.DTOs
             public int RefillCount { get; set; }
             /// <summary>Son dolum tarihi</summary>
             /// <example>2022-04-06T09:24:50.375521+00:00</example>
-            public DateTimeOffset LastRefillDate { get; set; }
+            public DateTimeOffset? LastRefillDate { get; set; }
             /// <summary>Damacana türü</summary>
             /// <example>1</example>
             public BottleTypes BottleType { get; set; }

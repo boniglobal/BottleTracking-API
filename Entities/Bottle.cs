@@ -9,8 +9,8 @@
         public string QrCode { get; set; }
         public int QrPrintCount { get; set; }
         public int Status { get; set; }
-        public DateTimeOffset LastRefillDate { get; set; }
-        public DateTimeOffset LastUpdateDate { get; set; }
+        public DateTimeOffset? LastRefillDate { get; set; }
+        public DateTimeOffset? LastUpdateDate { get; set; }
         public string LastDistributorId { get; set; }
         public string LastDistributionRegion { get; set; }
         public bool Deleted { get; set; }
